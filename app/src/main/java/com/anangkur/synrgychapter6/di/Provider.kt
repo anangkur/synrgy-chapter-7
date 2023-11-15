@@ -12,11 +12,12 @@ import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
+@Deprecated(message = "replaced by library", level = DeprecationLevel.ERROR)
 class Provider(
    val context: Application,
 ) {
 
-    val workManager = WorkManager.getInstance(context)
+//    val workManager = WorkManager.getInstance(context)
 
     private val chucker = ChuckerInterceptor(context)
 
@@ -29,10 +30,14 @@ class Provider(
 //        .addInterceptor(httpLogger)
         .build()
 
+    private val baseUrl: String = "https://api.themoviedb.org/3/"
+
+    private val gsonConverterFactory: GsonConverterFactory = GsonConverterFactory.create()
+
     private val retrofit: Retrofit = Retrofit.Builder()
         .client(client)
-        .baseUrl("https://api.themoviedb.org/3/")
-        .addConverterFactory(GsonConverterFactory.create())
+        .baseUrl(baseUrl)
+        .addConverterFactory(gsonConverterFactory)
         .build()
 
     private val tmdbService: TMDBService = retrofit.create(TMDBService::class.java)
