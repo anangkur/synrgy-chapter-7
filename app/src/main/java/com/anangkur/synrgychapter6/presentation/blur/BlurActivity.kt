@@ -6,6 +6,7 @@ import android.net.Uri
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.work.WorkInfo
+import com.anangkur.synrgychapter6.Application
 import com.anangkur.synrgychapter6.databinding.ActivityBlurBinding
 import com.anangkur.synrgychapter6.helper.worker.KEY_IMAGE_URI
 import com.esafirm.imagepicker.features.ImagePickerConfig
@@ -13,6 +14,7 @@ import com.esafirm.imagepicker.features.ImagePickerMode
 import com.esafirm.imagepicker.features.registerImagePicker
 import com.esafirm.imagepicker.model.Image
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import javax.inject.Inject
 
 class BlurActivity : AppCompatActivity() {
 
@@ -23,11 +25,14 @@ class BlurActivity : AppCompatActivity() {
     }
 
     private val binding by lazy { ActivityBlurBinding.inflate(layoutInflater) }
-    private val viewModel by viewModel<BlurViewModel>()
+
+    @Inject
+    lateinit var viewModel: BlurViewModel
     private val imagePickerLauncher = registerImagePicker(callback = ::handleImageResult)
     private val imagePickerConfig by lazy { ImagePickerConfig(mode = ImagePickerMode.SINGLE) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        (application as Application).appComponent.inject(this)
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 

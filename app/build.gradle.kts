@@ -1,6 +1,7 @@
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
+    id("kotlin-kapt")
 }
 
 android {
@@ -71,8 +72,12 @@ dependencies {
     // image picker
     implementation("com.github.esafirm:android-image-picker:3.0.0")
 
-    // dependency injection
+    // koin
     implementation("io.insert-koin:koin-bom:3.5.1")
     implementation("io.insert-koin:koin-android")
     implementation("io.insert-koin:koin-androidx-workmanager")
+
+    // dagger
+    implementation("com.google.dagger:dagger:2.48.1")
+    kapt("com.google.dagger:dagger-compiler:2.48.1")
 }

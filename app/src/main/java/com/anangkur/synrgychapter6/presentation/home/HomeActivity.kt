@@ -7,11 +7,13 @@ import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.anangkur.synrgychapter6.Application
 import com.anangkur.synrgychapter6.databinding.ActivityHomeBinding
 import com.anangkur.synrgychapter6.domain.Movie
 import com.anangkur.synrgychapter6.presentation.adapter.MovieAdapter
 import com.anangkur.synrgychapter6.presentation.profile.ProfileActivity
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import javax.inject.Inject
 
 class HomeActivity : AppCompatActivity() {
 
@@ -24,9 +26,11 @@ class HomeActivity : AppCompatActivity() {
     private var binding: ActivityHomeBinding? = null
     private var movieAdapter: MovieAdapter? = null
 
-    private val viewModel by viewModel<HomeViewModel>()
+    @Inject
+    lateinit var viewModel: HomeViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        (application as Application).appComponent.inject(this)
         super.onCreate(savedInstanceState)
 
         binding = ActivityHomeBinding.inflate(layoutInflater)

@@ -5,9 +5,11 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.anangkur.synrgychapter6.Application
 import com.anangkur.synrgychapter6.databinding.ActivityRegisterBinding
 import com.anangkur.synrgychapter6.presentation.home.HomeActivity
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import javax.inject.Inject
 
 class RegisterActivity : AppCompatActivity() {
 
@@ -18,9 +20,12 @@ class RegisterActivity : AppCompatActivity() {
     }
 
     private var binding: ActivityRegisterBinding? = null
-    private val viewModel by viewModel<RegisterViewModel>()
+
+    @Inject
+    lateinit var viewModel: RegisterViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        (application as Application).appComponent.inject(this)
         super.onCreate(savedInstanceState)
 
         binding = ActivityRegisterBinding.inflate(layoutInflater)

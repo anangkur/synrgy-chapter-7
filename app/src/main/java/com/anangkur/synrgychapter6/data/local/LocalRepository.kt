@@ -9,8 +9,9 @@ import com.anangkur.synrgychapter6.data.local.DataStoreManager
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
+import javax.inject.Inject
 
-class LocalRepository(
+class LocalRepository @Inject constructor(
     private val dataStoreManager: DataStoreManager,
 ) : LoginRepository, RegisterRepository, ProfileRepository {
 

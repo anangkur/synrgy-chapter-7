@@ -14,6 +14,7 @@ import com.anangkur.synrgychapter6.presentation.blur.BlurViewModel
 import com.anangkur.synrgychapter6.presentation.home.HomeViewModel
 import com.anangkur.synrgychapter6.presentation.profile.ProfileViewModel
 import com.chuckerteam.chucker.api.ChuckerInterceptor
+import dagger.Provides
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import org.koin.androidx.viewmodel.dsl.viewModel
@@ -21,6 +22,7 @@ import org.koin.dsl.module
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
+@Deprecated(message = "replaced by dagger", level = DeprecationLevel.ERROR)
 private val generalModule = module {
     single { ChuckerInterceptor(get()) }
     single { HttpLoggingInterceptor().apply { level = HttpLoggingInterceptor.Level.BODY } }
@@ -30,10 +32,12 @@ private val generalModule = module {
     single { provideRetrofit(get(), get(), get()) }
     single { provideTMDBService(get()) }
     single { DataStoreManager(get()) }
-    single<LoginRepository> { LocalRepository(get()) }
-    single<HomeRepository> { RemoteRepository(get()) }
-    single<ProfileRepository> { LocalRepository(get()) }
-    single<RegisterRepository> { LocalRepository(get()) }
+    single { LocalRepository(get()) }
+    single { RemoteRepository(get()) }
+    single { provideLoginRepository(get()) }
+    single { provideRegisterRepository(get()) }
+    single { provideHomeRepository(get()) }
+    single { provideProfileRepository(get()) }
 }
 
 private val viewModelModule = module {
@@ -44,7 +48,31 @@ private val viewModelModule = module {
     viewModel { BlurViewModel(get(), get()) }
 }
 
-val appModules = listOf(generalModule, viewModelModule)
+//val appModules = listOf(generalModule, viewModelModule)
+
+private fun provideLoginRepository(
+    localRepository: LocalRepository,
+): LoginRepository {
+    return localRepository
+}
+
+private fun provideHomeRepository(
+    remoteRepository: RemoteRepository,
+): HomeRepository {
+    return remoteRepository
+}
+
+private fun provideProfileRepository(
+    localRepository: LocalRepository,
+): ProfileRepository {
+    return localRepository
+}
+
+private fun provideRegisterRepository(
+    localRepository: LocalRepository,
+): RegisterRepository {
+    return localRepository
+}
 
 private fun provideOkhttpClient(
     chuckerInterceptor: ChuckerInterceptor,

@@ -5,8 +5,9 @@ import com.anangkur.synrgychapter6.data.remote.service.TMDBService
 import com.anangkur.synrgychapter6.domain.Movie
 import com.anangkur.synrgychapter6.domain.repository.HomeRepository
 import kotlinx.coroutines.delay
+import javax.inject.Inject
 
-class RemoteRepository(
+class RemoteRepository @Inject constructor(
     private val tmdbService: TMDBService,
 ) : HomeRepository {
     override suspend fun fetchMovies(): List<Movie> {

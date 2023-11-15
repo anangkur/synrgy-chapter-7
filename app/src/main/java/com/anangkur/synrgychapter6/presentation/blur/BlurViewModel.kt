@@ -32,9 +32,10 @@ import com.anangkur.synrgychapter6.helper.worker.BlurWorker
 import com.anangkur.synrgychapter6.helper.worker.IMAGE_MANIPULATION_WORK_NAME
 import com.anangkur.synrgychapter6.helper.worker.KEY_IMAGE_URI
 import com.anangkur.synrgychapter6.helper.worker.TAG_OUTPUT
+import javax.inject.Inject
 
 
-class BlurViewModel(
+class BlurViewModel @Inject constructor(
     private val workManager: WorkManager,
     private val application: Application,
 ) : ViewModel() {
