@@ -16,86 +16,72 @@
 
 package com.anangkur.synrgychapter6.presentation.blur
 
-import android.app.Application
-import android.content.ContentResolver
-import android.content.Context
 import android.net.Uri
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.work.Data
-import androidx.work.ExistingWorkPolicy
-import androidx.work.OneTimeWorkRequestBuilder
+import androidx.lifecycle.viewModelScope
 import androidx.work.WorkInfo
-import androidx.work.WorkManager
-import com.anangkur.synrgychapter6.R
-import com.anangkur.synrgychapter6.helper.worker.BlurWorker
-import com.anangkur.synrgychapter6.helper.worker.IMAGE_MANIPULATION_WORK_NAME
-import com.anangkur.synrgychapter6.helper.worker.KEY_IMAGE_URI
-import com.anangkur.synrgychapter6.helper.worker.TAG_OUTPUT
+import com.anangkur.synrgychapter6.domain.repository.BlurRepository
+import com.anangkur.synrgychapter6.domain.repository.ProfileRepository
+import com.anangkur.synrgychapter6.helper.toUriOrNull
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 
 class BlurViewModel @Inject constructor(
-    private val workManager: WorkManager,
-    private val application: Application,
+    private val blurRepository: BlurRepository,
+    private val profileRepository: ProfileRepository,
 ) : ViewModel() {
 
-    internal var imageUri: Uri? = null
-    internal var outputUri: Uri? = null
+    private val _error = MutableLiveData<String?>()
+    val error: LiveData<String?> = _error
 
-    internal val outputWorkerInfos: LiveData<List<WorkInfo>>
+    private val _profilePhoto = MutableLiveData<String?>()
+    val profilePhoto: LiveData<String?> = _profilePhoto
 
-    init {
-        imageUri = getImageUri(application.applicationContext)
-        outputWorkerInfos = workManager.getWorkInfosByTagLiveData(TAG_OUTPUT)
-    }
-    /**
-     * Create the WorkRequest to apply the blur and save the resulting image
-     * @param blurLevel The amount to blur the image
-     */
-    internal fun applyBlur() {
-        workManager.beginUniqueWork(
-            IMAGE_MANIPULATION_WORK_NAME,
-            ExistingWorkPolicy.REPLACE,
-            OneTimeWorkRequestBuilder<BlurWorker>()
-                .setInputData(setInputDataForUri())
-                .addTag(TAG_OUTPUT)
-                .build()
-        ).enqueue()
-    }
-
-    private fun uriOrNull(uriString: String?): Uri? {
-        return if (!uriString.isNullOrEmpty()) {
-            Uri.parse(uriString)
-        } else {
-            null
-        }
-    }
-
-    private fun getImageUri(context: Context): Uri {
-        val resources = context.resources
-
-        val imageUri = Uri.Builder()
-            .scheme(ContentResolver.SCHEME_ANDROID_RESOURCE)
-            .authority(resources.getResourcePackageName(R.drawable.android_cupcake))
-            .appendPath(resources.getResourceTypeName(R.drawable.android_cupcake))
-            .appendPath(resources.getResourceEntryName(R.drawable.android_cupcake))
-            .build()
-
-        return imageUri
-    }
+    private var imageUri: Uri? = null
+    private var outputUri: Uri? = null
 
     internal fun setOutputUri(outputImageUri: String?) {
-        outputUri = uriOrNull(outputImageUri)
+        outputUri = outputImageUri.toUriOrNull()
     }
 
     internal fun setImageUri(imageUri: String?) {
-        this.imageUri = uriOrNull(imageUri)
+        this.imageUri = imageUri.toUriOrNull()
     }
 
-    private fun setInputDataForUri(): Data {
-        return Data.Builder().apply {
-            putString(KEY_IMAGE_URI, imageUri?.toString())
-        }.build()
+    fun saveProfilePhoto(profilePhoto: String) {
+        viewModelScope.launch(Dispatchers.IO) {
+            blurRepository.saveProfilePhoto(profilePhoto)
+        }
+    }
+
+    fun applyBlur() {
+        blurRepository.applyBlur(imageUri)
+    }
+
+    fun getOutputWorkerInfo(): LiveData<List<WorkInfo>> {
+        return blurRepository.getWorkManagerLiveData()
+    }
+
+    fun loadProfilePhoto() {
+        viewModelScope.launch(Dispatchers.IO) {
+            profileRepository.loadProfilePhoto()
+                .catch { throwable ->
+                    withContext(Dispatchers.Main) {
+                        _error.value = throwable.message
+                    }
+                }
+                .collectLatest { profilePhoto ->
+                    withContext(Dispatchers.Main) {
+                        _profilePhoto.value = profilePhoto
+                    }
+                }
+        }
     }
 }

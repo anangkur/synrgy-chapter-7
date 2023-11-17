@@ -6,12 +6,16 @@ import android.net.Uri
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.lifecycleScope
 import androidx.work.WorkInfo
+import coil.load
 import com.anangkur.synrgychapter6.Application
 import com.anangkur.synrgychapter6.databinding.ActivityProfileBinding
 import com.anangkur.synrgychapter6.helper.worker.KEY_IMAGE_URI
 import com.anangkur.synrgychapter6.presentation.auth.login.LoginActivity
 import com.anangkur.synrgychapter6.presentation.blur.BlurActivity
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import javax.inject.Inject
 
@@ -38,6 +42,7 @@ class ProfileActivity : AppCompatActivity() {
         observeLiveData()
 
         viewModel.loadProfile()
+        viewModel.loadProfilePhoto()
 
         binding?.buttonLogout?.setOnClickListener {
             viewModel.logout()
@@ -54,7 +59,7 @@ class ProfileActivity : AppCompatActivity() {
         viewModel.loading.observe(this, ::handleLoading)
         viewModel.error.observe(this, ::handleError)
         viewModel.logout.observe(this, ::handleLogout)
-        viewModel.outputWorkerInfos.observe(this, ::handleWorkerInfos)
+        viewModel.profilePhoto.observe(this, ::handleProfilePhoto)
     }
 
     private fun handleUsername(username: String?) {
@@ -79,19 +84,7 @@ class ProfileActivity : AppCompatActivity() {
         }
     }
 
-    private fun handleWorkerInfos(workerInfos: List<WorkInfo>) {
-        if (workerInfos.isEmpty()) {
-            return
-        }
-
-        val workerInfo = workerInfos.last()
-        if (workerInfo.state.isFinished) {
-            val outputImageUrl = workerInfo.outputData.getString(KEY_IMAGE_URI)
-            if (!outputImageUrl.isNullOrEmpty()) {
-                binding?.ivProfile?.setImageURI(Uri.parse(outputImageUrl))
-            }
-        } else {
-            // todo handle in progress
-        }
+    private fun handleProfilePhoto(profilePhoto: String?) {
+        profilePhoto?.let { binding?.ivProfile?.setImageURI(Uri.parse(profilePhoto)) }
     }
 }

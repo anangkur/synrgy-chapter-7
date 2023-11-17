@@ -7,6 +7,7 @@ import com.anangkur.synrgychapter6.data.local.DataStoreManager
 import com.anangkur.synrgychapter6.data.local.LocalRepository
 import com.anangkur.synrgychapter6.data.remote.RemoteRepository
 import com.anangkur.synrgychapter6.data.remote.service.TMDBService
+import com.anangkur.synrgychapter6.domain.repository.BlurRepository
 import com.anangkur.synrgychapter6.domain.repository.HomeRepository
 import com.anangkur.synrgychapter6.domain.repository.LoginRepository
 import com.anangkur.synrgychapter6.domain.repository.ProfileRepository
@@ -42,8 +43,9 @@ class GeneralModule(
     @Provides
     fun provideLocalRepository(
         dataStoreManager: DataStoreManager,
+        workManager: WorkManager,
     ): LocalRepository {
-        return LocalRepository(dataStoreManager)
+        return LocalRepository(dataStoreManager, workManager)
     }
 
     @Provides
@@ -78,6 +80,13 @@ class GeneralModule(
     fun provideRegisterRepository(
         localRepository: LocalRepository,
     ): RegisterRepository {
+        return localRepository
+    }
+
+    @Provides
+    fun provideBlurRepository(
+        localRepository: LocalRepository,
+    ): BlurRepository {
         return localRepository
     }
 

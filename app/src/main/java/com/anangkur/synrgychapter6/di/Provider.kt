@@ -17,7 +17,7 @@ class Provider(
    val context: Application,
 ) {
 
-//    val workManager = WorkManager.getInstance(context)
+    val workManager = WorkManager.getInstance(context)
 
     private val chucker = ChuckerInterceptor(context)
 
@@ -48,6 +48,7 @@ class Provider(
 
     val localRepository: LocalRepository = LocalRepository(
         dataStoreManager = dataStoreManager,
+        workManager = workManager,
     )
 
     val remoteRepository: RemoteRepository = RemoteRepository(

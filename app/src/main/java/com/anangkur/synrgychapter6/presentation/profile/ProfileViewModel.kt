@@ -4,10 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.work.WorkInfo
-import androidx.work.WorkManager
 import com.anangkur.synrgychapter6.domain.repository.ProfileRepository
-import com.anangkur.synrgychapter6.helper.worker.TAG_OUTPUT
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.collectLatest
@@ -17,11 +14,8 @@ import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 class ProfileViewModel @Inject constructor(
-    private val profileRepository: ProfileRepository,
-    private val workManager: WorkManager,
+    private val profileRepository: ProfileRepository
 ) : ViewModel() {
-
-    internal val outputWorkerInfos = workManager.getWorkInfosByTagLiveData(TAG_OUTPUT)
 
     private val _loading = MutableLiveData<Boolean>()
     val loading: LiveData<Boolean> = _loading
@@ -37,6 +31,9 @@ class ProfileViewModel @Inject constructor(
 
     private val _logout = MutableLiveData<Boolean>()
     val logout: LiveData<Boolean> = _logout
+
+    private val _profilePhoto = MutableLiveData<String?>()
+    val profilePhoto: LiveData<String?> = _profilePhoto
 
     fun loadProfile() {
         _loading.value = true
@@ -66,6 +63,22 @@ class ProfileViewModel @Inject constructor(
         viewModelScope.launch(Dispatchers.Main) {
             profileRepository.logout()
             _logout.value = true
+        }
+    }
+
+    fun loadProfilePhoto() {
+        viewModelScope.launch(Dispatchers.IO) {
+            profileRepository.loadProfilePhoto()
+                .catch { throwable ->
+                    withContext(Dispatchers.Main) {
+                        _error.value = throwable.message
+                    }
+                }
+                .collectLatest { profilePhoto ->
+                    withContext(Dispatchers.Main) {
+                        _profilePhoto.value = profilePhoto
+                    }
+                }
         }
     }
 }

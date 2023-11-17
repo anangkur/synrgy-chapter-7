@@ -1,11 +1,23 @@
 package com.anangkur.synrgychapter6.data.local
 
+import android.net.Uri
+import androidx.lifecycle.LiveData
+import androidx.work.Data
+import androidx.work.ExistingWorkPolicy
+import androidx.work.OneTimeWorkRequestBuilder
+import androidx.work.WorkInfo
+import androidx.work.WorkManager
 import com.anangkur.synrgychapter6.domain.repository.LoginRepository
 import com.anangkur.synrgychapter6.domain.repository.ProfileRepository
 import com.anangkur.synrgychapter6.domain.repository.RegisterRepository
 import com.anangkur.synrgychapter6.helper.isEmailValid
 import com.anangkur.synrgychapter6.helper.isPasswordValid
 import com.anangkur.synrgychapter6.data.local.DataStoreManager
+import com.anangkur.synrgychapter6.domain.repository.BlurRepository
+import com.anangkur.synrgychapter6.helper.worker.BlurWorker
+import com.anangkur.synrgychapter6.helper.worker.IMAGE_MANIPULATION_WORK_NAME
+import com.anangkur.synrgychapter6.helper.worker.KEY_IMAGE_URI
+import com.anangkur.synrgychapter6.helper.worker.TAG_OUTPUT
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
@@ -13,7 +25,8 @@ import javax.inject.Inject
 
 class LocalRepository @Inject constructor(
     private val dataStoreManager: DataStoreManager,
-) : LoginRepository, RegisterRepository, ProfileRepository {
+    private val workManager: WorkManager,
+) : LoginRepository, RegisterRepository, ProfileRepository, BlurRepository {
 
     override suspend fun validateInput(username: String, password: String): Boolean {
         delay(1000)
@@ -87,5 +100,34 @@ class LocalRepository @Inject constructor(
         dataStoreManager.deleteEmail()
         dataStoreManager.deleteUsername()
         dataStoreManager.deleteToken()
+    }
+
+    override suspend fun loadProfilePhoto(): Flow<String?> {
+        return dataStoreManager.loadProfilePhoto()
+    }
+
+    override suspend fun saveProfilePhoto(profilePhoto: String) {
+        dataStoreManager.saveProfilePhoto(profilePhoto)
+    }
+
+    override fun applyBlur(imageUri: Uri?) {
+        workManager.beginUniqueWork(
+            IMAGE_MANIPULATION_WORK_NAME,
+            ExistingWorkPolicy.REPLACE,
+            OneTimeWorkRequestBuilder<BlurWorker>()
+                .setInputData(setInputDataForUri(imageUri))
+                .addTag(TAG_OUTPUT)
+                .build()
+        ).enqueue()
+    }
+
+    private fun setInputDataForUri(imageUri: Uri?): Data {
+        return Data.Builder().apply {
+            putString(KEY_IMAGE_URI, imageUri?.toString())
+        }.build()
+    }
+
+    override fun getWorkManagerLiveData(): LiveData<List<WorkInfo>> {
+        return workManager.getWorkInfosByTagLiveData(TAG_OUTPUT)
     }
 }

@@ -6,4 +6,5 @@ interface ProfileRepository {
     suspend fun loadUsername(): Flow<String?>
     suspend fun loadEmail(): Flow<String?>
     suspend fun logout()
+    suspend fun loadProfilePhoto(): Flow<String?>
 }

@@ -14,7 +14,6 @@ import com.anangkur.synrgychapter6.presentation.blur.BlurViewModel
 import com.anangkur.synrgychapter6.presentation.home.HomeViewModel
 import com.anangkur.synrgychapter6.presentation.profile.ProfileViewModel
 import com.chuckerteam.chucker.api.ChuckerInterceptor
-import dagger.Provides
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import org.koin.androidx.viewmodel.dsl.viewModel
@@ -32,7 +31,7 @@ private val generalModule = module {
     single { provideRetrofit(get(), get(), get()) }
     single { provideTMDBService(get()) }
     single { DataStoreManager(get()) }
-    single { LocalRepository(get()) }
+    single { LocalRepository(get(), get()) }
     single { RemoteRepository(get()) }
     single { provideLoginRepository(get()) }
     single { provideRegisterRepository(get()) }
@@ -44,7 +43,7 @@ private val viewModelModule = module {
     viewModel { LoginViewModel(get()) }
     viewModel { HomeViewModel(get()) }
     viewModel { RegisterViewModel(get()) }
-    viewModel { ProfileViewModel(get(), get()) }
+    viewModel { ProfileViewModel(get()) }
     viewModel { BlurViewModel(get(), get()) }
 }
 
