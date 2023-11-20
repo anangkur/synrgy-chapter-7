@@ -4,10 +4,6 @@ import com.anangkur.synrgychapter6.data.local.DataStoreManager
 import com.anangkur.synrgychapter6.data.local.LocalRepository
 import com.anangkur.synrgychapter6.data.remote.RemoteRepository
 import com.anangkur.synrgychapter6.data.remote.service.TMDBService
-import com.anangkur.synrgychapter6.domain.repository.HomeRepository
-import com.anangkur.synrgychapter6.domain.repository.LoginRepository
-import com.anangkur.synrgychapter6.domain.repository.ProfileRepository
-import com.anangkur.synrgychapter6.domain.repository.RegisterRepository
 import com.anangkur.synrgychapter6.presentation.auth.login.LoginViewModel
 import com.anangkur.synrgychapter6.presentation.auth.register.RegisterViewModel
 import com.anangkur.synrgychapter6.presentation.blur.BlurViewModel
@@ -33,14 +29,10 @@ private val generalModule = module {
     single { DataStoreManager(get()) }
     single { LocalRepository(get(), get()) }
     single { RemoteRepository(get()) }
-    single { provideLoginRepository(get()) }
-    single { provideRegisterRepository(get()) }
-    single { provideHomeRepository(get()) }
-    single { provideProfileRepository(get()) }
 }
 
 private val viewModelModule = module {
-    viewModel { LoginViewModel(get()) }
+    viewModel { LoginViewModel(get(), get(), get()) }
     viewModel { HomeViewModel(get()) }
     viewModel { RegisterViewModel(get()) }
     viewModel { ProfileViewModel(get()) }
@@ -48,30 +40,6 @@ private val viewModelModule = module {
 }
 
 //val appModules = listOf(generalModule, viewModelModule)
-
-private fun provideLoginRepository(
-    localRepository: LocalRepository,
-): LoginRepository {
-    return localRepository
-}
-
-private fun provideHomeRepository(
-    remoteRepository: RemoteRepository,
-): HomeRepository {
-    return remoteRepository
-}
-
-private fun provideProfileRepository(
-    localRepository: LocalRepository,
-): ProfileRepository {
-    return localRepository
-}
-
-private fun provideRegisterRepository(
-    localRepository: LocalRepository,
-): RegisterRepository {
-    return localRepository
-}
 
 private fun provideOkhttpClient(
     chuckerInterceptor: ChuckerInterceptor,

@@ -2,6 +2,6 @@ package com.anangkur.synrgychapter6.domain.repository
 
 import com.anangkur.synrgychapter6.domain.Movie
 
-interface HomeRepository {
+interface MovieRepository {
     suspend fun fetchMovies(): List<Movie>
 }

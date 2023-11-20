@@ -7,17 +7,15 @@ import androidx.work.ExistingWorkPolicy
 import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkInfo
 import androidx.work.WorkManager
-import com.anangkur.synrgychapter6.domain.repository.LoginRepository
-import com.anangkur.synrgychapter6.domain.repository.ProfileRepository
-import com.anangkur.synrgychapter6.domain.repository.RegisterRepository
+import com.anangkur.synrgychapter6.domain.repository.AccountRepository
+import com.anangkur.synrgychapter6.domain.repository.AuthRepository
+import com.anangkur.synrgychapter6.domain.repository.ImageRepository
 import com.anangkur.synrgychapter6.helper.isEmailValid
 import com.anangkur.synrgychapter6.helper.isPasswordValid
-import com.anangkur.synrgychapter6.data.local.DataStoreManager
-import com.anangkur.synrgychapter6.domain.repository.BlurRepository
-import com.anangkur.synrgychapter6.helper.worker.BlurWorker
-import com.anangkur.synrgychapter6.helper.worker.IMAGE_MANIPULATION_WORK_NAME
-import com.anangkur.synrgychapter6.helper.worker.KEY_IMAGE_URI
-import com.anangkur.synrgychapter6.helper.worker.TAG_OUTPUT
+import com.anangkur.synrgychapter6.data.local.worker.BlurWorker
+import com.anangkur.synrgychapter6.data.local.worker.IMAGE_MANIPULATION_WORK_NAME
+import com.anangkur.synrgychapter6.data.local.worker.KEY_IMAGE_URI
+import com.anangkur.synrgychapter6.data.local.worker.TAG_OUTPUT
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
@@ -26,7 +24,7 @@ import javax.inject.Inject
 class LocalRepository @Inject constructor(
     private val dataStoreManager: DataStoreManager,
     private val workManager: WorkManager,
-) : LoginRepository, RegisterRepository, ProfileRepository, BlurRepository {
+) : AccountRepository, AuthRepository, ImageRepository {
 
     override suspend fun validateInput(username: String, password: String): Boolean {
         delay(1000)
@@ -121,7 +119,7 @@ class LocalRepository @Inject constructor(
         ).enqueue()
     }
 
-    private fun setInputDataForUri(imageUri: Uri?): Data {
+    override fun setInputDataForUri(imageUri: Uri?): Data {
         return Data.Builder().apply {
             putString(KEY_IMAGE_URI, imageUri?.toString())
         }.build()

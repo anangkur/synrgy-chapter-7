@@ -16,7 +16,7 @@
 
 @file:JvmName("WorkerUtils")
 
-package com.anangkur.synrgychapter6.helper.worker
+package com.anangkur.synrgychapter6.data.local.worker
 
 import android.Manifest
 import android.app.NotificationChannel

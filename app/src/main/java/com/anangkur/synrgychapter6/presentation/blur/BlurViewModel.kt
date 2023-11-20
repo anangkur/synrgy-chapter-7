@@ -22,8 +22,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.work.WorkInfo
-import com.anangkur.synrgychapter6.domain.repository.BlurRepository
-import com.anangkur.synrgychapter6.domain.repository.ProfileRepository
+import com.anangkur.synrgychapter6.domain.repository.AccountRepository
+import com.anangkur.synrgychapter6.domain.repository.ImageRepository
 import com.anangkur.synrgychapter6.helper.toUriOrNull
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.catch
@@ -34,8 +34,8 @@ import javax.inject.Inject
 
 
 class BlurViewModel @Inject constructor(
-    private val blurRepository: BlurRepository,
-    private val profileRepository: ProfileRepository,
+    private val imageRepository: ImageRepository,
+    private val accountRepository: AccountRepository,
 ) : ViewModel() {
 
     private val _error = MutableLiveData<String?>()
@@ -57,21 +57,21 @@ class BlurViewModel @Inject constructor(
 
     fun saveProfilePhoto(profilePhoto: String) {
         viewModelScope.launch(Dispatchers.IO) {
-            blurRepository.saveProfilePhoto(profilePhoto)
+            accountRepository.saveProfilePhoto(profilePhoto)
         }
     }
 
     fun applyBlur() {
-        blurRepository.applyBlur(imageUri)
+        imageRepository.applyBlur(imageUri)
     }
 
     fun getOutputWorkerInfo(): LiveData<List<WorkInfo>> {
-        return blurRepository.getWorkManagerLiveData()
+        return imageRepository.getWorkManagerLiveData()
     }
 
     fun loadProfilePhoto() {
         viewModelScope.launch(Dispatchers.IO) {
-            profileRepository.loadProfilePhoto()
+            accountRepository.loadProfilePhoto()
                 .catch { throwable ->
                     withContext(Dispatchers.Main) {
                         _error.value = throwable.message

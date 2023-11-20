@@ -1,7 +1,10 @@
 package com.anangkur.synrgychapter6.di.dagger
 
 import android.app.Application
-import android.content.Context
+import com.anangkur.synrgychapter6.di.dagger.data.DataModule
+import com.anangkur.synrgychapter6.di.dagger.domain.DomainModule
+import com.anangkur.synrgychapter6.di.dagger.domain.UseCaseModule
+import com.anangkur.synrgychapter6.di.dagger.presentation.PresentationModule
 import com.anangkur.synrgychapter6.presentation.auth.login.LoginActivity
 import com.anangkur.synrgychapter6.presentation.auth.register.RegisterActivity
 import com.anangkur.synrgychapter6.presentation.blur.BlurActivity
@@ -11,7 +14,10 @@ import dagger.Component
 
 @Component(
     modules = [
-        GeneralModule::class,
+        PresentationModule::class,
+        DomainModule::class,
+        UseCaseModule::class,
+        DataModule::class,
     ]
 )
 interface ApplicationComponent {

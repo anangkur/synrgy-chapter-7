@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.anangkur.synrgychapter6.domain.repository.ProfileRepository
+import com.anangkur.synrgychapter6.domain.repository.AccountRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.collectLatest
@@ -14,7 +14,7 @@ import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 class ProfileViewModel @Inject constructor(
-    private val profileRepository: ProfileRepository
+    private val accountRepository: AccountRepository,
 ) : ViewModel() {
 
     private val _loading = MutableLiveData<Boolean>()
@@ -38,9 +38,9 @@ class ProfileViewModel @Inject constructor(
     fun loadProfile() {
         _loading.value = true
         viewModelScope.launch(Dispatchers.IO) {
-            profileRepository.loadUsername()
+            accountRepository.loadUsername()
                 .combine(
-                    profileRepository.loadEmail()
+                    accountRepository.loadEmail()
                 ) { username, email ->
                     Pair(username, email)
                 }
@@ -61,14 +61,14 @@ class ProfileViewModel @Inject constructor(
 
     fun logout() {
         viewModelScope.launch(Dispatchers.Main) {
-            profileRepository.logout()
+            accountRepository.logout()
             _logout.value = true
         }
     }
 
     fun loadProfilePhoto() {
         viewModelScope.launch(Dispatchers.IO) {
-            profileRepository.loadProfilePhoto()
+            accountRepository.loadProfilePhoto()
                 .catch { throwable ->
                     withContext(Dispatchers.Main) {
                         _error.value = throwable.message

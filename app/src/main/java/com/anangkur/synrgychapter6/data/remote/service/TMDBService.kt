@@ -17,15 +17,4 @@ interface TMDBService {
         @Query("api_key") apiKey: String = "4b9bfb0e83de2a4afb17c157ccb254f3",
         @Query("with_original_language") withOriginalLanguage: String = "ko",
     ): Response
-
-    @POST("auth/editProfile")
-    suspend fun editProfile(
-        @Header("Authorization") token: String,
-        @Body editProfileBody: EditProfileBody,
-    ): EditProfileBody
 }
-
-data class EditProfileBody(
-    val name: String,
-    val image: String,
-)

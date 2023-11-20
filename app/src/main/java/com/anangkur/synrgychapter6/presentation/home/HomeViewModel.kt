@@ -5,14 +5,14 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.anangkur.synrgychapter6.domain.Movie
-import com.anangkur.synrgychapter6.domain.repository.HomeRepository
+import com.anangkur.synrgychapter6.domain.repository.MovieRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 class HomeViewModel @Inject constructor(
-    private val homeRepository: HomeRepository,
+    private val movieRepository: MovieRepository,
 ) : ViewModel() {
 
     private val _loading = MutableLiveData<Boolean>()
@@ -28,7 +28,7 @@ class HomeViewModel @Inject constructor(
         _loading.value = true
         viewModelScope.launch(Dispatchers.IO) {
             runCatching {
-                homeRepository.fetchMovies()
+                movieRepository.fetchMovies()
             }.onFailure { exception ->
                 withContext(Dispatchers.Main) {
                     _loading.value = false

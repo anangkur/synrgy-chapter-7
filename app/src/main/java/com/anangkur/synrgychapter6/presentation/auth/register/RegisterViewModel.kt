@@ -4,14 +4,14 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.anangkur.synrgychapter6.domain.repository.RegisterRepository
+import com.anangkur.synrgychapter6.domain.repository.AuthRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 class RegisterViewModel @Inject constructor(
-    private val registerRepository: RegisterRepository,
+    private val authRepository: AuthRepository,
 ) : ViewModel() {
 
     private val _loading = MutableLiveData<Boolean>()
@@ -31,9 +31,9 @@ class RegisterViewModel @Inject constructor(
     ) {
         _loading.value = true
         viewModelScope.launch(Dispatchers.IO) {
-            if (registerRepository.validateInput(username, email, password, confirmPassword)) {
+            if (authRepository.validateInput(username, email, password, confirmPassword)) {
                 withContext(Dispatchers.Main) {
-                    _register.value = registerRepository.register(username, email, password, confirmPassword)
+                    _register.value = authRepository.register(username, email, password, confirmPassword)
                     _loading.value = false
                 }
             } else {

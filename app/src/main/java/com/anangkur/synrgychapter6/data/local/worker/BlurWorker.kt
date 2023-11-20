@@ -1,4 +1,4 @@
-package com.anangkur.synrgychapter6.helper.worker
+package com.anangkur.synrgychapter6.data.local.worker
 
 import android.content.Context
 import android.graphics.BitmapFactory

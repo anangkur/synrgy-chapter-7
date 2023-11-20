@@ -2,14 +2,14 @@ package com.anangkur.synrgychapter6
 
 import android.app.Application
 import com.anangkur.synrgychapter6.di.dagger.DaggerApplicationComponent
-import com.anangkur.synrgychapter6.di.dagger.GeneralModule
+import com.anangkur.synrgychapter6.di.dagger.presentation.PresentationModule
 
 class Application : Application() {
 
 //    lateinit var provider: Provider
 
     val appComponent = DaggerApplicationComponent.builder()
-        .generalModule(GeneralModule(this))
+        .presentationModule(PresentationModule(this))
         .build()
 
     override fun onCreate() {
