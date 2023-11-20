@@ -1,10 +1,10 @@
 package com.anangkur.synrgychapter6.di.dagger
 
 import android.app.Application
-import com.anangkur.synrgychapter6.di.dagger.data.DataModule
-import com.anangkur.synrgychapter6.di.dagger.domain.DomainModule
-import com.anangkur.synrgychapter6.di.dagger.domain.UseCaseModule
-import com.anangkur.synrgychapter6.di.dagger.presentation.PresentationModule
+import com.anangkur.di.dagger.data.DataModule
+import com.anangkur.di.dagger.domain.DomainModule
+import com.anangkur.di.dagger.domain.UseCaseModule
+import com.anangkur.di.dagger.presentation.PresentationModule
 import com.anangkur.synrgychapter6.presentation.auth.login.LoginActivity
 import com.anangkur.synrgychapter6.presentation.auth.register.RegisterActivity
 import com.anangkur.synrgychapter6.presentation.blur.BlurActivity

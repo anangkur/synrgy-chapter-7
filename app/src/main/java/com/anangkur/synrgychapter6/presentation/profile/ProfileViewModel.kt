@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.anangkur.synrgychapter6.domain.repository.AccountRepository
+import com.anangkur.domain.repository.AccountRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.collectLatest
@@ -14,7 +14,7 @@ import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 class ProfileViewModel @Inject constructor(
-    private val accountRepository: AccountRepository,
+    private val accountRepository: com.anangkur.domain.repository.AccountRepository,
 ) : ViewModel() {
 
     private val _loading = MutableLiveData<Boolean>()

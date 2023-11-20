@@ -22,9 +22,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.work.WorkInfo
-import com.anangkur.synrgychapter6.domain.repository.AccountRepository
-import com.anangkur.synrgychapter6.domain.repository.ImageRepository
-import com.anangkur.synrgychapter6.helper.toUriOrNull
+import com.anangkur.domain.repository.AccountRepository
+import com.anangkur.helper.toUriOrNull
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.collectLatest
@@ -32,9 +31,8 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
-
 class BlurViewModel @Inject constructor(
-    private val imageRepository: ImageRepository,
+    private val applyBlurUseCase: com.anangkur.presentation.blur.ApplyBlurUseCase,
     private val accountRepository: AccountRepository,
 ) : ViewModel() {
 
@@ -62,11 +60,11 @@ class BlurViewModel @Inject constructor(
     }
 
     fun applyBlur() {
-        imageRepository.applyBlur(imageUri)
+        applyBlurUseCase.invoke(imageUri)
     }
 
     fun getOutputWorkerInfo(): LiveData<List<WorkInfo>> {
-        return imageRepository.getWorkManagerLiveData()
+        return applyBlurUseCase.getWorkManagerLiveData()
     }
 
     fun loadProfilePhoto() {

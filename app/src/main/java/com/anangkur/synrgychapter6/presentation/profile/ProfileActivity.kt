@@ -6,17 +6,10 @@ import android.net.Uri
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.lifecycleScope
-import androidx.work.WorkInfo
-import coil.load
+import com.anangkur.synrgychapter6.presentation.auth.login.LoginActivity
 import com.anangkur.synrgychapter6.Application
 import com.anangkur.synrgychapter6.databinding.ActivityProfileBinding
-import com.anangkur.synrgychapter6.data.local.worker.KEY_IMAGE_URI
-import com.anangkur.synrgychapter6.presentation.auth.login.LoginActivity
 import com.anangkur.synrgychapter6.presentation.blur.BlurActivity
-import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.launch
-import org.koin.androidx.viewmodel.ext.android.viewModel
 import javax.inject.Inject
 
 class ProfileActivity : AppCompatActivity() {

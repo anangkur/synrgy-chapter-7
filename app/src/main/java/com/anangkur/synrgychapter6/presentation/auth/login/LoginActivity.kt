@@ -6,10 +6,9 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.anangkur.helper.applyLanguage
 import com.anangkur.synrgychapter6.Application
-import com.anangkur.synrgychapter6.data.local.LocalRepository
 import com.anangkur.synrgychapter6.databinding.ActivityLoginBinding
-import com.anangkur.synrgychapter6.helper.applyLanguage
 import com.anangkur.synrgychapter6.presentation.auth.register.RegisterActivity
 import com.anangkur.synrgychapter6.presentation.home.HomeActivity
 import javax.inject.Inject
@@ -32,8 +31,9 @@ class LoginActivity : AppCompatActivity() {
     lateinit var viewModel: LoginViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        (application as Application).appComponent.inject(this)
         super.onCreate(savedInstanceState)
+
+        (application as Application).appComponent.inject(this)
 
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding?.root)

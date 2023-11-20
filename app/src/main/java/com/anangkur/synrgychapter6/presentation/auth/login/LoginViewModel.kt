@@ -4,9 +4,9 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.anangkur.synrgychapter6.presentation.auth.login.usecase.AuthenticateUseCase
-import com.anangkur.synrgychapter6.presentation.auth.login.usecase.CheckLoginUseCase
-import com.anangkur.synrgychapter6.presentation.auth.login.usecase.SaveTokenUseCase
+import com.anangkur.presentation.auth.login.AuthenticateUseCase
+import com.anangkur.presentation.auth.login.CheckLoginUseCase
+import com.anangkur.presentation.auth.login.SaveTokenUseCase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch

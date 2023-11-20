@@ -15,8 +15,7 @@ import androidx.core.content.FileProvider
 import androidx.work.WorkInfo
 import com.anangkur.synrgychapter6.Application
 import com.anangkur.synrgychapter6.databinding.ActivityBlurBinding
-import com.anangkur.synrgychapter6.helper.requestPermissions
-import com.anangkur.synrgychapter6.data.local.worker.KEY_IMAGE_URI
+import com.anangkur.helper.requestPermissions
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import java.io.File
 import javax.inject.Inject
@@ -86,7 +85,7 @@ class BlurActivity : AppCompatActivity() {
 
         val workerInfo = workerInfos.last()
         if (workerInfo.state.isFinished) {
-            val outputImageUrl = workerInfo.outputData.getString(KEY_IMAGE_URI)
+            val outputImageUrl = workerInfo.outputData.getString(com.anangkur.helper.worker.KEY_IMAGE_URI)
             if (!outputImageUrl.isNullOrEmpty()) {
                 viewModel.setOutputUri(outputImageUrl)
                 viewModel.saveProfilePhoto(outputImageUrl)

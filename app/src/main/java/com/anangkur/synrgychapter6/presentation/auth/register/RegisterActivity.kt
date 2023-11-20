@@ -8,7 +8,6 @@ import androidx.appcompat.app.AppCompatActivity
 import com.anangkur.synrgychapter6.Application
 import com.anangkur.synrgychapter6.databinding.ActivityRegisterBinding
 import com.anangkur.synrgychapter6.presentation.home.HomeActivity
-import org.koin.androidx.viewmodel.ext.android.viewModel
 import javax.inject.Inject
 
 class RegisterActivity : AppCompatActivity() {
