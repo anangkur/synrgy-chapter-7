@@ -6,7 +6,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.anangkur.helper.applyLanguage
+import com.anangkur.synrgychapter6.helper.applyLanguage
 import com.anangkur.synrgychapter6.Application
 import com.anangkur.synrgychapter6.databinding.ActivityLoginBinding
 import com.anangkur.synrgychapter6.presentation.auth.register.RegisterActivity

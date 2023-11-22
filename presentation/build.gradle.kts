@@ -33,9 +33,15 @@ android {
 }
 
 dependencies {
+    // module
     implementation(project(":domain"))
-    implementation(project(":helper"))
-    implementation(project(":data"))
+
+    // inject annotation
     implementation("javax.inject:javax.inject:1")
+
+    // work manager
     implementation("androidx.work:work-runtime-ktx:2.8.1")
+
+    // android core (notification, activity etc)
+    implementation("androidx.core:core-ktx:1.12.0")
 }

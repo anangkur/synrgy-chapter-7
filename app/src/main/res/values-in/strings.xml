@@ -11,4 +11,10 @@
     <string name="button_register">Mendaftar</string>
     <string name="button_logout">Keluar</string>
     <string name="button_profile">Profil</string>
+    <string name="text_select_blur_amount">Pilih jumlah blur</string>
+    <string name="text_little_blurred">Sedikit blur</string>
+    <string name="text_more_blurred">Lebih blur</string>
+    <string name="text_the_most_blurred">Sangat blur</string>
+    <string name="button_go">Lanjutkan</string>
+    <string name="title_auth">Auth</string>
 </resources>

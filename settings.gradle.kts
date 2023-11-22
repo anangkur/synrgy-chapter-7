@@ -18,6 +18,5 @@ rootProject.name = "Synrgy Chapter 6"
 include(":app")
 include(":domain")
 include(":data")
-include(":helper")
 include(":di")
 include(":presentation")

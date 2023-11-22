@@ -14,7 +14,7 @@ import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 class ProfileViewModel @Inject constructor(
-    private val accountRepository: com.anangkur.domain.repository.AccountRepository,
+    private val accountRepository: AccountRepository,
 ) : ViewModel() {
 
     private val _loading = MutableLiveData<Boolean>()

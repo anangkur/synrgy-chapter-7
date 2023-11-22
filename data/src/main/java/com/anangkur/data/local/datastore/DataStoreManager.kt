@@ -28,7 +28,7 @@ class DataStoreManager @Inject constructor(
         context.dataStore.edit { settings -> settings[KEY_TOKEN] = token }
     }
 
-    suspend fun loadToken(): Flow<String?> {
+    fun loadToken(): Flow<String?> {
         return context.dataStore.data.map { preferences -> preferences[KEY_TOKEN] }
     }
 
@@ -36,7 +36,7 @@ class DataStoreManager @Inject constructor(
         context.dataStore.edit { settings -> settings[KEY_USER_NAME] = username }
     }
 
-    suspend fun loadUsername(): Flow<String?> {
+    fun loadUsername(): Flow<String?> {
         return context.dataStore.data.map { preferences -> preferences[KEY_USER_NAME] }
     }
 
@@ -44,7 +44,7 @@ class DataStoreManager @Inject constructor(
         context.dataStore.edit { settings -> settings[KEY_EMAIL] = username }
     }
 
-    suspend fun loadEmail(): Flow<String?> {
+    fun loadEmail(): Flow<String?> {
         return context.dataStore.data.map { preferences -> preferences[KEY_EMAIL] }
     }
 
@@ -64,7 +64,7 @@ class DataStoreManager @Inject constructor(
         context.dataStore.edit { settings -> settings[KEY_PROFILE_PHOTO] = profilePhoto }
     }
 
-    suspend fun loadProfilePhoto(): Flow<String?> {
+    fun loadProfilePhoto(): Flow<String?> {
         return context.dataStore.data.map { preferences -> preferences[KEY_PROFILE_PHOTO] }
     }
 }

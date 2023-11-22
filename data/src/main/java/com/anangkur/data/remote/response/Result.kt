@@ -34,8 +34,8 @@ data class Result(
     val voteCount: Int?
 )
 
-fun Result.toMovie(): com.anangkur.domain.Movie {
-    return com.anangkur.domain.Movie(
+fun Result.toMovie(): Movie {
+    return Movie(
         overview = overview.orEmpty(),
         originalTitle = originalTitle.orEmpty(),
         backdropPath = backdropPath.orEmpty(),

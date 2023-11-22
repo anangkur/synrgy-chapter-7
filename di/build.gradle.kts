@@ -36,21 +36,20 @@ android {
 dependencies {
     // module
     api(project(":domain"))
-    api(project(":helper"))
     api(project(":data"))
     api(project(":presentation"))
 
     // dagger
-    implementation("com.google.dagger:dagger:2.48.1")
+    api("com.google.dagger:dagger:2.48.1")
     kapt("com.google.dagger:dagger-compiler:2.48.1")
 
     // work manager
-    implementation("androidx.work:work-runtime-ktx:2.8.1")
+    api("androidx.work:work-runtime-ktx:2.8.1")
 
     // networking
-    implementation("com.squareup.retrofit2:retrofit:2.9.0")
-    implementation("com.squareup.retrofit2:converter-gson:2.9.0")
-    debugImplementation("com.github.chuckerteam.chucker:library:4.0.0")
-    releaseImplementation("com.github.chuckerteam.chucker:library-no-op:4.0.0")
-    implementation("com.squareup.okhttp3:logging-interceptor:4.11.0")
+    api("com.squareup.retrofit2:retrofit:2.9.0")
+    api("com.squareup.retrofit2:converter-gson:2.9.0")
+    debugApi("com.github.chuckerteam.chucker:library:4.0.0")
+    releaseApi("com.github.chuckerteam.chucker:library-no-op:4.0.0")
+    api("com.squareup.okhttp3:logging-interceptor:4.11.0")
 }

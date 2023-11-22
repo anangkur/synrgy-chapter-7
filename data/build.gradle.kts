@@ -33,13 +33,18 @@ android {
 }
 
 dependencies {
+    // module
     implementation(project(":domain"))
-    implementation(project(":helper"))
-    implementation("androidx.work:work-runtime-ktx:2.8.1")
+
+    // data store
     implementation("androidx.datastore:datastore-preferences:1.0.0")
+
+    // inject annotation
     implementation("javax.inject:javax.inject:1")
+
+    // retrofit
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
+
+    // gson
     implementation("com.google.code.gson:gson:2.10.1")
-    debugImplementation("com.github.chuckerteam.chucker:library:4.0.0")
-    releaseImplementation("com.github.chuckerteam.chucker:library-no-op:4.0.0")
 }

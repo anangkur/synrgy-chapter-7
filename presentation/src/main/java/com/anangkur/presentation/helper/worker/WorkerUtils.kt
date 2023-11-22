@@ -16,7 +16,7 @@
 
 @file:JvmName("WorkerUtils")
 
-package com.anangkur.helper.worker
+package com.anangkur.presentation.helper.worker
 
 import android.Manifest
 import android.app.NotificationChannel
@@ -30,19 +30,16 @@ import android.renderscript.Allocation
 import android.renderscript.Element
 import android.renderscript.RenderScript
 import android.renderscript.ScriptIntrinsicBlur
-import android.util.Log
 import androidx.annotation.WorkerThread
 import androidx.core.app.ActivityCompat
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
-import com.anangkur.helper.R
+import com.anangkur.presentation.R
 import java.io.File
 import java.io.FileNotFoundException
 import java.io.FileOutputStream
 import java.io.IOException
 import java.util.UUID
-
-private const val TAG = "WorkerUtils"
 
 /**
  * Create a Notification that is shown as a heads-up notification if possible.
@@ -60,7 +57,8 @@ fun makeStatusNotification(message: String, context: Context) {
         // Create the NotificationChannel, but only on API 26+ because
         // the NotificationChannel class is new and not in the support library
         val name = VERBOSE_NOTIFICATION_CHANNEL_NAME
-        val description = VERBOSE_NOTIFICATION_CHANNEL_DESCRIPTION
+        val description =
+            VERBOSE_NOTIFICATION_CHANNEL_DESCRIPTION
         val importance = NotificationManager.IMPORTANCE_HIGH
         val channel = NotificationChannel(CHANNEL_ID, name, importance)
         channel.description = description
@@ -73,7 +71,9 @@ fun makeStatusNotification(message: String, context: Context) {
     }
 
     // Create the notification
-    val builder = NotificationCompat.Builder(context, CHANNEL_ID)
+    val builder = NotificationCompat.Builder(context,
+        CHANNEL_ID
+    )
             .setSmallIcon(R.drawable.ic_launcher_foreground)
             .setContentTitle(NOTIFICATION_TITLE)
             .setContentText(message)
@@ -86,18 +86,6 @@ fun makeStatusNotification(message: String, context: Context) {
     }
 
     NotificationManagerCompat.from(context).notify(NOTIFICATION_ID, builder.build())
-}
-
-/**
- * Method for sleeping for a fixed amount of time to emulate slower work
- */
-fun sleep() {
-    try {
-        Thread.sleep(DELAY_TIME_MILLIS, 0)
-    } catch (e: InterruptedException) {
-        Log.e(TAG, e.message.toString())
-    }
-
 }
 
 /**
@@ -143,7 +131,9 @@ fun blurBitmap(bitmap: Bitmap, applicationContext: Context): Bitmap {
 @Throws(FileNotFoundException::class)
 fun writeBitmapToFile(applicationContext: Context, bitmap: Bitmap): Uri {
     val name = String.format("blur-filter-output-%s.png", UUID.randomUUID().toString())
-    val outputDir = File(applicationContext.filesDir, OUTPUT_PATH)
+    val outputDir = File(applicationContext.filesDir,
+        OUTPUT_PATH
+    )
     if (!outputDir.exists()) {
         outputDir.mkdirs() // should succeed
     }

@@ -12,7 +12,7 @@ import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 class HomeViewModel @Inject constructor(
-    private val movieRepository: com.anangkur.domain.repository.MovieRepository,
+    private val movieRepository: MovieRepository,
 ) : ViewModel() {
 
     private val _loading = MutableLiveData<Boolean>()
@@ -21,8 +21,8 @@ class HomeViewModel @Inject constructor(
     private val _error = MutableLiveData<String?>()
     val error: LiveData<String?> = _error
 
-    private val _movies = MutableLiveData<List<com.anangkur.domain.Movie>>()
-    val movies: LiveData<List<com.anangkur.domain.Movie>> = _movies
+    private val _movies = MutableLiveData<List<Movie>>()
+    val movies: LiveData<List<Movie>> = _movies
 
     fun fetchMovies() {
         _loading.value = true

@@ -1,4 +1,4 @@
-package com.anangkur.helper
+package com.anangkur.synrgychapter6.helper
 
 import android.net.Uri
 
