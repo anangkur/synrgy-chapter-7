@@ -5,11 +5,11 @@ plugins {
 }
 
 android {
-    namespace = "com.anangkur.synrgychapter6"
+    namespace = "com.anangkur.synrgychapter7"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.anangkur.synrgychapter6"
+        applicationId = "com.anangkur.synrgychapter7"
         minSdk = 21
         targetSdk = 34
         versionCode = 1

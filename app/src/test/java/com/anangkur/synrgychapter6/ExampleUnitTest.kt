@@ -1,4 +1,4 @@
-package com.anangkur.synrgychapter6
+package com.anangkur.synrgychapter7
 
 import org.junit.Test
 

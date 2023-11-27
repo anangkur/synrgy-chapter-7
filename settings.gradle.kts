@@ -14,7 +14,7 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "Synrgy Chapter 6"
+rootProject.name = "Synrgy Chapter 7"
 include(":app")
 include(":domain")
 include(":data")

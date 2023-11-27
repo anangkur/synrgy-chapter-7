@@ -1,6 +1,6 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Theme.synrgychapter6" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
+    <style name="Theme.synrgychapter7" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/purple_200</item>
         <item name="colorPrimaryVariant">@color/purple_700</item>
@@ -14,7 +14,7 @@
         <!-- Customize your theme here. -->
     </style>
 
-    <style name="Theme.SpecialScreen" parent="Theme.synrgychapter6">
+    <style name="Theme.SpecialScreen" parent="Theme.synrgychapter7">
         <item name="colorPrimary">@color/white</item>
         <item name="colorOnPrimary">@color/black</item>
     </style>
