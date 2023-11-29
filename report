@@ -1,0 +1,12 @@
+20:50:23.631 [main] INFO com.pinterest.ktlint.cli.internal.KtlintCommandLine - Enable default patterns [**/*.kt, **/*.kts]
+/Users/anangkur/AndroidStudioProjects/SynrgyChapter6/app/src/androidTest/java/com/anangkur/synrgychapter6/ExampleInstrumentedTest.kt:5:1: Wildcard import (standard:no-wildcard-imports)
+/Users/anangkur/AndroidStudioProjects/SynrgyChapter6/app/src/test/java/com/anangkur/synrgychapter6/ExampleUnitTest.kt:3:1: Wildcard import (standard:no-wildcard-imports)
+/Users/anangkur/AndroidStudioProjects/SynrgyChapter6/data/src/main/java/com/anangkur/data/local/LocalRepository.kt:51:1: Exceeded max line length (140) (standard:max-line-length)
+/Users/anangkur/AndroidStudioProjects/SynrgyChapter6/presentation/src/main/java/com/anangkur/presentation/helper/worker/WorkerUtils.kt:159:54: A block comment in between other elements on the same line is disallowed (standard:comment-wrapping)
+/Users/anangkur/AndroidStudioProjects/SynrgyChapter6/presentation/src/main/java/com/anangkur/presentation/helper/worker/WorkerUtils.kt:159:54: A comment in a 'value_argument_list' is only allowed when placed on a separate line (standard:discouraged-comment-location)
+
+Summary error count (descending) by rule:
+  standard:no-wildcard-imports: 2
+  standard:comment-wrapping: 1
+  standard:discouraged-comment-location: 1
+  standard:max-line-length: 1

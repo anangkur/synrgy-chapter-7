@@ -22,7 +22,7 @@
         android:id="@+id/button_go"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/button_go"
+        android:text="test"
         style="@style/Button.Primary"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"

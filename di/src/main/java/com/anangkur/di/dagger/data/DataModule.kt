@@ -22,30 +22,22 @@ class DataModule {
     }
 
     @Provides
-    fun provideLocalRepository(
-        dataStoreManager: DataStoreManager,
-    ): LocalRepository {
+    fun provideLocalRepository(dataStoreManager: DataStoreManager): LocalRepository {
         return LocalRepository(dataStoreManager)
     }
 
     @Provides
-    fun provideRemoteRepository(
-        tmdbService: TMDBService
-    ): RemoteRepository {
+    fun provideRemoteRepository(tmdbService: TMDBService): RemoteRepository {
         return RemoteRepository(tmdbService)
     }
 
     @Provides
-    fun provideDataStoreManager(
-        context: Context,
-    ): DataStoreManager {
+    fun provideDataStoreManager(context: Context): DataStoreManager {
         return DataStoreManager(context)
     }
 
     @Provides
-    fun provideTMDBService(
-        retrofit: Retrofit,
-    ): TMDBService {
+    fun provideTMDBService(retrofit: Retrofit): TMDBService {
         return retrofit.create(TMDBService::class.java)
     }
 

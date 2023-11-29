@@ -13,18 +13,16 @@ import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.FileProvider
 import androidx.work.WorkInfo
-import com.anangkur.synrgychapter7.helper.worker.KEY_IMAGE_URI
 import com.anangkur.synrgychapter7.Application
 import com.anangkur.synrgychapter7.databinding.ActivityBlurBinding
 import com.anangkur.synrgychapter7.helper.requestPermissions
+import com.anangkur.synrgychapter7.helper.worker.KEY_IMAGE_URI
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import java.io.File
 import javax.inject.Inject
 
 class BlurActivity : AppCompatActivity() {
-
     companion object {
-
         private const val REQUEST_CODE_PERMISSION = 0
         private const val MIME_TYPE_IMAGE = "image/*"
         private const val PHOTO_FILE_PREFIX = "IMG_"
@@ -39,25 +37,29 @@ class BlurActivity : AppCompatActivity() {
 
     @Inject
     lateinit var viewModel: BlurViewModel
-    private val permissions = arrayOf(
-        Manifest.permission.CAMERA,
-        Manifest.permission.READ_EXTERNAL_STORAGE,
-        Manifest.permission.WRITE_EXTERNAL_STORAGE
-    )
+    private val permissions =
+        arrayOf(
+            Manifest.permission.CAMERA,
+            Manifest.permission.READ_EXTERNAL_STORAGE,
+            Manifest.permission.WRITE_EXTERNAL_STORAGE,
+        )
 
     @RequiresApi(Build.VERSION_CODES.TIRAMISU)
-    private val permissionsAndroid13 = arrayOf(
-        Manifest.permission.CAMERA,
-        Manifest.permission.READ_MEDIA_IMAGES,
-    )
-    private val galleryResult = registerForActivityResult(
-        ActivityResultContracts.GetContent(),
-        ::galleryResultCallback,
-    )
-    private val cameraResult = registerForActivityResult(
-        ActivityResultContracts.TakePicture(),
-        ::cameraResultCallback,
-    )
+    private val permissionsAndroid13 =
+        arrayOf(
+            Manifest.permission.CAMERA,
+            Manifest.permission.READ_MEDIA_IMAGES,
+        )
+    private val galleryResult =
+        registerForActivityResult(
+            ActivityResultContracts.GetContent(),
+            ::galleryResultCallback,
+        )
+    private val cameraResult =
+        registerForActivityResult(
+            ActivityResultContracts.TakePicture(),
+            ::cameraResultCallback,
+        )
     private var photoUri: Uri? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -99,11 +101,12 @@ class BlurActivity : AppCompatActivity() {
 
     private fun checkingPermissions() {
         requestPermissions(
-            permissions = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                permissionsAndroid13
-            } else {
-                permissions
-            },
+            permissions =
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                    permissionsAndroid13
+                } else {
+                    permissions
+                },
             requestCode = REQUEST_CODE_PERMISSION,
             doIfGranted = ::showChooseImageDialog,
         )
@@ -123,16 +126,18 @@ class BlurActivity : AppCompatActivity() {
     }
 
     private fun showCamera() {
-        val photoFile = File.createTempFile(
-            PHOTO_FILE_PREFIX,
-            PHOTO_FILE_SUFFIX,
-            getExternalFilesDir(Environment.DIRECTORY_PICTURES),
-        )
-        photoUri = FileProvider.getUriForFile(
-            this,
-            "${this.packageName}.provider",
-            photoFile,
-        )
+        val photoFile =
+            File.createTempFile(
+                PHOTO_FILE_PREFIX,
+                PHOTO_FILE_SUFFIX,
+                getExternalFilesDir(Environment.DIRECTORY_PICTURES),
+            )
+        photoUri =
+            FileProvider.getUriForFile(
+                this,
+                "${this.packageName}.provider",
+                photoFile,
+            )
         cameraResult.launch(photoUri)
     }
 

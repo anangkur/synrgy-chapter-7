@@ -5,7 +5,6 @@ import retrofit2.http.GET
 import retrofit2.http.Query
 
 interface TMDBService {
-
     /**
      * Find movies using over 30 filters and sort options.
      */

@@ -10,25 +10,18 @@ import dagger.Provides
 
 @Module
 class DomainModule {
-
     @Provides
-    fun provideAccountRepository(
-        localRepository: LocalRepository,
-    ): AccountRepository {
+    fun provideAccountRepository(localRepository: LocalRepository): AccountRepository {
         return localRepository
     }
 
     @Provides
-    fun provideAuthRepository(
-        localRepository: LocalRepository,
-    ): AuthRepository {
+    fun provideAuthRepository(localRepository: LocalRepository): AuthRepository {
         return localRepository
     }
 
     @Provides
-    fun provideMovieRepository(
-        remoteRepository: RemoteRepository,
-    ): MovieRepository {
+    fun provideMovieRepository(remoteRepository: RemoteRepository): MovieRepository {
         return remoteRepository
     }
 }

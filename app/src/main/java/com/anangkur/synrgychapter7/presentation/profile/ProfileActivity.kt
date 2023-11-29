@@ -6,14 +6,13 @@ import android.net.Uri
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.anangkur.synrgychapter7.presentation.auth.login.LoginActivity
 import com.anangkur.synrgychapter7.Application
 import com.anangkur.synrgychapter7.databinding.ActivityProfileBinding
+import com.anangkur.synrgychapter7.presentation.auth.login.LoginActivity
 import com.anangkur.synrgychapter7.presentation.blur.BlurActivity
 import javax.inject.Inject
 
 class ProfileActivity : AppCompatActivity() {
-
     companion object {
         fun startActivity(context: Context) {
             context.startActivity(Intent(context, ProfileActivity::class.java))

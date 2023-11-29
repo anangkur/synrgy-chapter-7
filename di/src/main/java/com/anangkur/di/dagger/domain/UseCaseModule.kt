@@ -10,23 +10,17 @@ import dagger.Provides
 @Module
 class UseCaseModule {
     @Provides
-    fun provideAuthenticateUseCase(
-        authRepository: AuthRepository,
-    ): AuthenticateUseCase {
+    fun provideAuthenticateUseCase(authRepository: AuthRepository): AuthenticateUseCase {
         return AuthenticateUseCase(authRepository)
     }
 
     @Provides
-    fun provideCheckLoginUseCase(
-        authRepository: AuthRepository,
-    ): CheckLoginUseCase {
+    fun provideCheckLoginUseCase(authRepository: AuthRepository): CheckLoginUseCase {
         return CheckLoginUseCase(authRepository)
     }
 
     @Provides
-    fun provideSaveTokenUseCase(
-        authRepository: AuthRepository,
-    ): SaveTokenUseCase {
+    fun provideSaveTokenUseCase(authRepository: AuthRepository): SaveTokenUseCase {
         return SaveTokenUseCase(authRepository)
     }
 }

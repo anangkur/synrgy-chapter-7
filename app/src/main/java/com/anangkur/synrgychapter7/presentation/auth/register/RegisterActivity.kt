@@ -11,7 +11,6 @@ import com.anangkur.synrgychapter7.presentation.home.HomeActivity
 import javax.inject.Inject
 
 class RegisterActivity : AppCompatActivity() {
-
     companion object {
         fun startActivity(context: Context) {
             context.startActivity(Intent(context, RegisterActivity::class.java))

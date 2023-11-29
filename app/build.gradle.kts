@@ -23,7 +23,7 @@ android {
             isMinifyEnabled = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
+                "proguard-rules.pro",
             )
         }
     }
@@ -37,6 +37,24 @@ android {
     buildFeatures {
         viewBinding = true
     }
+    lint {
+        disable.add("TypographyFractions")
+        disable.add("TypographyQuotes")
+
+        enable.add("RtlHardcoded")
+        enable.add("RtlCompat")
+        enable.add("RtlEnable")
+
+        checkOnly.add("NewApi")
+        checkOnly.add("InlinedApi")
+
+        quiet = true
+        abortOnError = false
+        ignoreWarnings = true
+        checkDependencies = true
+
+        baseline = file("lint-baseline.xml")
+    }
 }
 
 dependencies {
@@ -47,6 +65,7 @@ dependencies {
     implementation("androidx.core:core-ktx:1.12.0")
     implementation("androidx.appcompat:appcompat:1.6.1")
     implementation("com.google.android.material:material:1.10.0")
+    implementation("androidx.swiperefreshlayout:swiperefreshlayout:1.1.0")
 
     // view model
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.2")

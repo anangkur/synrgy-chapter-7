@@ -20,9 +20,10 @@ class BlurWorker(
 
         return try {
             val resourceUri = inputData.getString(KEY_IMAGE_URI)
-            val picture = BitmapFactory.decodeStream(
-                context.contentResolver.openInputStream(Uri.parse(resourceUri))
-            )
+            val picture =
+                BitmapFactory.decodeStream(
+                    context.contentResolver.openInputStream(Uri.parse(resourceUri)),
+                )
             val output = blurBitmap(picture, context)
             val outputUri = writeBitmapToFile(context, output)
 

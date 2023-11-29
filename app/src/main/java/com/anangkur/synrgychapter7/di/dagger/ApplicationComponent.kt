@@ -18,15 +18,18 @@ import dagger.Component
         DomainModule::class,
         UseCaseModule::class,
         DataModule::class,
-    ]
+    ],
 )
 interface ApplicationComponent {
-
     val application: Application
 
     fun inject(activity: LoginActivity)
+
     fun inject(activity: RegisterActivity)
+
     fun inject(activity: BlurActivity)
+
     fun inject(activity: HomeActivity)
+
     fun inject(activity: ProfileActivity)
 }

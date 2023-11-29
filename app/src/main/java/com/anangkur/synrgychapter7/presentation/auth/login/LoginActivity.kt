@@ -6,15 +6,14 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.anangkur.synrgychapter7.helper.applyLanguage
 import com.anangkur.synrgychapter7.Application
 import com.anangkur.synrgychapter7.databinding.ActivityLoginBinding
+import com.anangkur.synrgychapter7.helper.applyLanguage
 import com.anangkur.synrgychapter7.presentation.auth.register.RegisterActivity
 import com.anangkur.synrgychapter7.presentation.home.HomeActivity
 import javax.inject.Inject
 
 class LoginActivity : AppCompatActivity() {
-
     companion object {
         fun provideIntent(context: Context): Intent {
             return Intent(context, LoginActivity::class.java)

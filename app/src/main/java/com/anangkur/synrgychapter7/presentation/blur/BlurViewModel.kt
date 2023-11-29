@@ -31,55 +31,56 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
-class BlurViewModel @Inject constructor(
-    private val applyBlurUseCase: com.anangkur.presentation.blur.ApplyBlurUseCase,
-    private val accountRepository: AccountRepository,
-) : ViewModel() {
+class BlurViewModel
+    @Inject
+    constructor(
+        private val applyBlurUseCase: com.anangkur.presentation.blur.ApplyBlurUseCase,
+        private val accountRepository: AccountRepository,
+    ) : ViewModel() {
+        private val _error = MutableLiveData<String?>()
+        val error: LiveData<String?> = _error
 
-    private val _error = MutableLiveData<String?>()
-    val error: LiveData<String?> = _error
+        private val _profilePhoto = MutableLiveData<String?>()
+        val profilePhoto: LiveData<String?> = _profilePhoto
 
-    private val _profilePhoto = MutableLiveData<String?>()
-    val profilePhoto: LiveData<String?> = _profilePhoto
+        private var imageUri: Uri? = null
+        private var outputUri: Uri? = null
 
-    private var imageUri: Uri? = null
-    private var outputUri: Uri? = null
+        internal fun setOutputUri(outputImageUri: String?) {
+            outputUri = outputImageUri.toUriOrNull()
+        }
 
-    internal fun setOutputUri(outputImageUri: String?) {
-        outputUri = outputImageUri.toUriOrNull()
-    }
+        internal fun setImageUri(imageUri: String?) {
+            this.imageUri = imageUri.toUriOrNull()
+        }
 
-    internal fun setImageUri(imageUri: String?) {
-        this.imageUri = imageUri.toUriOrNull()
-    }
+        fun saveProfilePhoto(profilePhoto: String) {
+            viewModelScope.launch(Dispatchers.IO) {
+                accountRepository.saveProfilePhoto(profilePhoto)
+            }
+        }
 
-    fun saveProfilePhoto(profilePhoto: String) {
-        viewModelScope.launch(Dispatchers.IO) {
-            accountRepository.saveProfilePhoto(profilePhoto)
+        fun applyBlur() {
+            applyBlurUseCase.invoke(imageUri)
+        }
+
+        fun getOutputWorkerInfo(): LiveData<List<WorkInfo>> {
+            return applyBlurUseCase.getWorkManagerLiveData()
+        }
+
+        fun loadProfilePhoto() {
+            viewModelScope.launch(Dispatchers.IO) {
+                accountRepository.loadProfilePhoto()
+                    .catch { throwable ->
+                        withContext(Dispatchers.Main) {
+                            _error.value = throwable.message
+                        }
+                    }
+                    .collectLatest { profilePhoto ->
+                        withContext(Dispatchers.Main) {
+                            _profilePhoto.value = profilePhoto
+                        }
+                    }
+            }
         }
     }
-
-    fun applyBlur() {
-        applyBlurUseCase.invoke(imageUri)
-    }
-
-    fun getOutputWorkerInfo(): LiveData<List<WorkInfo>> {
-        return applyBlurUseCase.getWorkManagerLiveData()
-    }
-
-    fun loadProfilePhoto() {
-        viewModelScope.launch(Dispatchers.IO) {
-            accountRepository.loadProfilePhoto()
-                .catch { throwable ->
-                    withContext(Dispatchers.Main) {
-                        _error.value = throwable.message
-                    }
-                }
-                .collectLatest { profilePhoto ->
-                    withContext(Dispatchers.Main) {
-                        _profilePhoto.value = profilePhoto
-                    }
-                }
-        }
-    }
-}

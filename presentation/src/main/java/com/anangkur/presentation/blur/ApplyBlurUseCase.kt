@@ -13,27 +13,29 @@ import com.anangkur.presentation.helper.worker.TAG_OUTPUT
 import com.anangkur.presentation.workmanager.BlurWorker
 import javax.inject.Inject
 
-class ApplyBlurUseCase @Inject constructor(
-    private val workManager: WorkManager,
-) {
-    operator fun invoke(imageUri: Uri?) {
-        workManager.beginUniqueWork(
-            IMAGE_MANIPULATION_WORK_NAME,
-            ExistingWorkPolicy.REPLACE,
-            OneTimeWorkRequestBuilder<BlurWorker>()
-                .setInputData(setInputDataForUri(imageUri))
-                .addTag(TAG_OUTPUT)
-                .build()
-        ).enqueue()
-    }
+class ApplyBlurUseCase
+    @Inject
+    constructor(
+        private val workManager: WorkManager,
+    ) {
+        operator fun invoke(imageUri: Uri?) {
+            workManager.beginUniqueWork(
+                IMAGE_MANIPULATION_WORK_NAME,
+                ExistingWorkPolicy.REPLACE,
+                OneTimeWorkRequestBuilder<BlurWorker>()
+                    .setInputData(setInputDataForUri(imageUri))
+                    .addTag(TAG_OUTPUT)
+                    .build(),
+            ).enqueue()
+        }
 
-    private fun setInputDataForUri(imageUri: Uri?): Data {
-        return Data.Builder().apply {
-            putString(KEY_IMAGE_URI, imageUri?.toString())
-        }.build()
-    }
+        private fun setInputDataForUri(imageUri: Uri?): Data {
+            return Data.Builder().apply {
+                putString(KEY_IMAGE_URI, imageUri?.toString())
+            }.build()
+        }
 
-    fun getWorkManagerLiveData(): LiveData<List<WorkInfo>> {
-        return workManager.getWorkInfosByTagLiveData(TAG_OUTPUT)
+        fun getWorkManagerLiveData(): LiveData<List<WorkInfo>> {
+            return workManager.getWorkInfosByTagLiveData(TAG_OUTPUT)
+        }
     }
-}

@@ -15,7 +15,6 @@ import com.anangkur.synrgychapter7.presentation.profile.ProfileActivity
 import javax.inject.Inject
 
 class HomeActivity : AppCompatActivity() {
-
     companion object {
         fun startActivity(context: Context) {
             context.startActivity(Intent(context, HomeActivity::class.java))
@@ -43,6 +42,8 @@ class HomeActivity : AppCompatActivity() {
         }
 
         viewModel.fetchMovies()
+
+        binding?.root?.setOnRefreshListener { viewModel.fetchMovies() }
     }
 
     private fun setupMovieAdapter() {

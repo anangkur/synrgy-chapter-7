@@ -50,8 +50,10 @@ import java.util.UUID
  * @param message Message shown on the notification
  * @param context Context needed to create Toast
  */
-fun makeStatusNotification(message: String, context: Context) {
-
+fun makeStatusNotification(
+    message: String,
+    context: Context,
+) {
     // Make a channel if necessary
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
         // Create the NotificationChannel, but only on API 26+ because
@@ -65,15 +67,17 @@ fun makeStatusNotification(message: String, context: Context) {
 
         // Add the channel
         val notificationManager =
-                context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager?
+            context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager?
 
         notificationManager?.createNotificationChannel(channel)
     }
 
     // Create the notification
-    val builder = NotificationCompat.Builder(context,
-        CHANNEL_ID
-    )
+    val builder =
+        NotificationCompat.Builder(
+            context,
+            CHANNEL_ID,
+        )
             .setSmallIcon(R.drawable.ic_launcher_foreground)
             .setContentTitle(NOTIFICATION_TITLE)
             .setContentText(message)
@@ -95,13 +99,19 @@ fun makeStatusNotification(message: String, context: Context) {
  * @return Blurred bitmap image
  */
 @WorkerThread
-fun blurBitmap(bitmap: Bitmap, applicationContext: Context): Bitmap {
+fun blurBitmap(
+    bitmap: Bitmap,
+    applicationContext: Context,
+): Bitmap {
     lateinit var rsContext: RenderScript
     try {
-
         // Create the output bitmap
-        val output = Bitmap.createBitmap(
-                bitmap.width, bitmap.height, bitmap.config)
+        val output =
+            Bitmap.createBitmap(
+                bitmap.width,
+                bitmap.height,
+                bitmap.config,
+            )
 
         // Blur the image
         rsContext = RenderScript.create(applicationContext, RenderScript.ContextType.DEBUG)
@@ -129,11 +139,16 @@ fun blurBitmap(bitmap: Bitmap, applicationContext: Context): Bitmap {
  * @throws FileNotFoundException Throws if bitmap file cannot be found
  */
 @Throws(FileNotFoundException::class)
-fun writeBitmapToFile(applicationContext: Context, bitmap: Bitmap): Uri {
+fun writeBitmapToFile(
+    applicationContext: Context,
+    bitmap: Bitmap,
+): Uri {
     val name = String.format("blur-filter-output-%s.png", UUID.randomUUID().toString())
-    val outputDir = File(applicationContext.filesDir,
-        OUTPUT_PATH
-    )
+    val outputDir =
+        File(
+            applicationContext.filesDir,
+            OUTPUT_PATH,
+        )
     if (!outputDir.exists()) {
         outputDir.mkdirs() // should succeed
     }
@@ -141,14 +156,13 @@ fun writeBitmapToFile(applicationContext: Context, bitmap: Bitmap): Uri {
     var out: FileOutputStream? = null
     try {
         out = FileOutputStream(outputFile)
-        bitmap.compress(Bitmap.CompressFormat.PNG, 0 /* ignored for PNG */, out)
+        bitmap.compress(Bitmap.CompressFormat.PNG, 0, out)
     } finally {
         out?.let {
             try {
                 it.close()
             } catch (ignore: IOException) {
             }
-
         }
     }
     return Uri.fromFile(outputFile)

@@ -10,7 +10,7 @@ class MovieViewHolder(
 ) : RecyclerView.ViewHolder(binding.root) {
     fun bind(movie: Movie) {
         binding.tvTitleMovie.text = movie.originalTitle
-        binding.tvDescMovie.text = movie.overview
+        binding.tvDescMovie.text = "test"
         binding.ivMovie.load("https://image.tmdb.org/t/p/w500${movie.posterPath}")
     }
 }
