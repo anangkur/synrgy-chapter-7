@@ -1,7 +1,7 @@
 package com.anangkur.di.dagger.domain
 
 import com.anangkur.domain.repository.AuthRepository
-import com.anangkur.presentation.auth.login.AuthenticateUseCase
+import com.anangkur.domain.usecase.AuthenticateUseCase
 import com.anangkur.presentation.auth.login.CheckLoginUseCase
 import com.anangkur.presentation.auth.login.SaveTokenUseCase
 import dagger.Module
@@ -11,7 +11,7 @@ import dagger.Provides
 class UseCaseModule {
     @Provides
     fun provideAuthenticateUseCase(authRepository: AuthRepository): AuthenticateUseCase {
-        return AuthenticateUseCase(authRepository)
+        return com.anangkur.presentation.auth.login.AuthenticateUseCase(authRepository)
     }
 
     @Provides

@@ -4,6 +4,8 @@ import android.app.Application
 import android.content.Context
 import dagger.Module
 import dagger.Provides
+import kotlinx.coroutines.Dispatchers
+import kotlin.coroutines.CoroutineContext
 
 @Module
 class PresentationModule(
@@ -17,5 +19,10 @@ class PresentationModule(
     @Provides
     fun provideApplication(): Application {
         return application
+    }
+
+    @Provides
+    fun provideDispatcher(): CoroutineContext {
+        return Dispatchers.IO
     }
 }
