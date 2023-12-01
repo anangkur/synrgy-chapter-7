@@ -20,6 +20,7 @@ import org.mockito.Captor
 import org.mockito.MockitoAnnotations
 import org.mockito.kotlin.capture
 import org.mockito.kotlin.mock
+import org.mockito.kotlin.times
 import org.mockito.kotlin.verify
 
 class LoginViewModelTest {
@@ -36,12 +37,16 @@ class LoginViewModelTest {
 
     private val stringObserver = mock<Observer<String?>>()
     private val intObserver = mock<Observer<Int>>()
+    private val booleanObserver = mock<Observer<Boolean>>()
 
     @Captor
     lateinit var stringCaptor: ArgumentCaptor<String>
 
     @Captor
     lateinit var intCaptor: ArgumentCaptor<Int>
+
+    @Captor
+    lateinit var booleanCaptor: ArgumentCaptor<Boolean>
 
     @Before
     fun setup() {
@@ -81,21 +86,27 @@ class LoginViewModelTest {
             val errorWrongValue = "errorWrongValue"
             val expected = "token"
             val expectedInt = 2131820572
+            val expectedLoading = listOf(true, false)
             val liveData = viewModel.authentication
             val liveDataInt = viewModel.int
+            val liveDataBoolean = viewModel.loading
             liveData.observeForever(stringObserver)
             liveDataInt.observeForever(intObserver)
+            liveDataBoolean.observeForever(booleanObserver)
 
             // When
             viewModel.authenticate(username, password, errorWrongValue)
             verify(stringObserver).onChanged(capture(stringCaptor))
             verify(intObserver).onChanged(capture(intCaptor))
+            verify(booleanObserver, times(2)).onChanged(capture(booleanCaptor))
 
             // Then
             val actual = stringCaptor.value
             val actualInt = intCaptor.value
+            val actualLoading = booleanCaptor.allValues
             Assert.assertEquals(expected, actual)
             Assert.assertEquals(expectedInt, actualInt)
+            Assert.assertEquals(expectedLoading, actualLoading)
         }
 
     @Test
@@ -105,16 +116,22 @@ class LoginViewModelTest {
             val username = ""
             val password = ""
             val expected = "username atau password salah!"
+            val expectedLoading = listOf(true, false)
             val liveData = viewModel.error
+            val liveDataBoolean = viewModel.loading
             liveData.observeForever(stringObserver)
+            liveDataBoolean.observeForever(booleanObserver)
 
             // When
             viewModel.authenticate(username, password, expected)
             verify(stringObserver).onChanged(capture(stringCaptor))
+            verify(booleanObserver, times(2)).onChanged(capture(booleanCaptor))
 
             // Then
             val actual = stringCaptor.value
+            val actualLoading = booleanCaptor.allValues
             Assert.assertEquals(expected, actual)
+            Assert.assertEquals(expectedLoading, actualLoading)
         }
 
     @Test
@@ -124,16 +141,22 @@ class LoginViewModelTest {
             val username = "username"
             val password = "password"
             val expected = "username atau password salah!"
+            val expectedLoading = listOf(true, false)
             val liveData = viewModel.error
+            val liveDataLoading = viewModel.loading
             liveData.observeForever(stringObserver)
+            liveDataLoading.observeForever(booleanObserver)
 
             // When
             viewModel.authenticate(username, password, expected)
             verify(stringObserver).onChanged(capture(stringCaptor))
+            verify(booleanObserver, times(2)).onChanged(capture(booleanCaptor))
 
             // Then
             val actual = stringCaptor.value
+            val actualLoading = booleanCaptor.allValues
             Assert.assertEquals(expected, actual)
+            Assert.assertEquals(expectedLoading, actualLoading)
         }
 
     @Test
@@ -143,15 +166,21 @@ class LoginViewModelTest {
             val username = "123456"
             val password = "098765"
             val expected = "username atau password salah!"
+            val expectedLoading = listOf(true, false)
             val liveData = viewModel.error
+            val liveDataLoading = viewModel.loading
             liveData.observeForever(stringObserver)
+            liveDataLoading.observeForever(booleanObserver)
 
             // When
             viewModel.authenticate(username, password, expected)
             verify(stringObserver).onChanged(capture(stringCaptor))
+            verify(booleanObserver, times(2)).onChanged(capture(booleanCaptor))
 
             // Then
             val actual = stringCaptor.value
+            val actualLoading = booleanCaptor.allValues
             Assert.assertEquals(expected, actual)
+            Assert.assertEquals(expectedLoading, actualLoading)
         }
 }
