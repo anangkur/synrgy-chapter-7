@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.widget.doAfterTextChanged
 import com.anangkur.synrgychapter7.Application
 import com.anangkur.synrgychapter7.databinding.ActivityLoginBinding
 import com.anangkur.synrgychapter7.helper.applyLanguage
@@ -55,12 +56,30 @@ class LoginActivity : AppCompatActivity() {
         binding?.buttonRegister?.setOnClickListener {
             register()
         }
+
+        binding?.etUsername?.doAfterTextChanged { value ->
+            handleEnableButtonLogin(username = value?.toString().orEmpty())
+        }
+
+        binding?.etPassword?.doAfterTextChanged { value ->
+            handleEnableButtonLogin(password = value?.toString().orEmpty())
+        }
     }
 
     private fun observeViewModel() {
         viewModel.authentication.observe(this, ::handleAuthentication)
         viewModel.error.observe(this, ::handleError)
         viewModel.loading.observe(this, ::handleLoading)
+    }
+
+    private fun handleEnableButtonLogin(
+        username: String = binding?.etUsername?.text?.toString().orEmpty(),
+        password: String = binding?.etPassword?.text?.toString().orEmpty(),
+    ) {
+        binding?.buttonLogin?.isEnabled = username.isNotEmpty() &&
+            username.isNotBlank() &&
+            password.isNotEmpty() &&
+            password.isNotBlank()
     }
 
     private fun handleAuthentication(token: String) {
