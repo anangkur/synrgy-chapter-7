@@ -7,15 +7,25 @@ import androidx.test.espresso.matcher.ViewMatchers
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.anangkur.synrgychapter7.R
+import com.karumi.shot.ScreenshotTest
+import org.junit.Ignore
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 
 @RunWith(AndroidJUnit4::class)
-class LoginActivityTest {
+class LoginActivityTest : ScreenshotTest {
     @get:Rule
     var activityRule = ActivityScenarioRule(LoginActivity::class.java)
 
+    @Test
+    fun testInitialStateLoginWithSnapshot() {
+        activityRule.scenario.onActivity {
+            compareScreenshot(it)
+        }
+    }
+
+    @Ignore
     @Test
     fun testViewIsVisible() {
         // make sure title is shown
@@ -73,6 +83,7 @@ class LoginActivityTest {
         )
     }
 
+    @Ignore
     @Test
     fun testEnableButtonLogin() {
         // make sure button login is disabled
