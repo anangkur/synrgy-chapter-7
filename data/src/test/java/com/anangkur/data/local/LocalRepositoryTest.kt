@@ -51,9 +51,10 @@ class LocalRepositoryTest {
             val username = "anangkur"
             val password = "123456"
             val expected = "token"
+            val errorWrongValue = "errorWrongValue"
 
             // When
-            val actual = repository.authenticate(username, password)
+            val actual = repository.authenticate(username, password, errorWrongValue)
 
             // Then
             Assert.assertEquals(expected, actual)
@@ -65,8 +66,9 @@ class LocalRepositoryTest {
             // Given
             val username = "username"
             val password = "password"
+            val errorWrongValue = "errorWrongValue"
 
             // When
-            repository.authenticate(username, password)
+            repository.authenticate(username, password, errorWrongValue)
         }
 }

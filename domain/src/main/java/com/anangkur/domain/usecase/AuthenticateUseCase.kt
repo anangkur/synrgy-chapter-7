@@ -4,5 +4,6 @@ interface AuthenticateUseCase {
     suspend fun invoke(
         username: String,
         password: String,
+        errorWrongValue: String,
     ): String
 }

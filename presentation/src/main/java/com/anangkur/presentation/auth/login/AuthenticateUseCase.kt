@@ -12,7 +12,8 @@ class AuthenticateUseCase
         override suspend operator fun invoke(
             username: String,
             password: String,
+            errorWrongValue: String,
         ): String {
-            return authRepository.authenticate(username, password)
+            return authRepository.authenticate(username, password, errorWrongValue)
         }
     }

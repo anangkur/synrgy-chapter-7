@@ -6,11 +6,12 @@ class FakeAuthenticateUseCase : AuthenticateUseCase {
     override suspend fun invoke(
         username: String,
         password: String,
+        errorWrongValue: String,
     ): String {
         return if (username == "anangkur" && password == "123456") {
             "token"
         } else {
-            throw UnsupportedOperationException("username atau password salah!")
+            throw UnsupportedOperationException(errorWrongValue)
         }
     }
 }

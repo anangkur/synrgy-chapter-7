@@ -22,10 +22,11 @@ class AuthenticateUseCaseTest {
             val username = "anangkur"
             val password = "123456"
             val expected = "token"
+            val errorWrongValue = "errorWrongValue"
 
             // When
-            whenever(authRepository.authenticate(username, password)).thenReturn(expected)
-            val actual = useCase.invoke(username, password)
+            whenever(authRepository.authenticate(username, password, errorWrongValue)).thenReturn(expected)
+            val actual = useCase.invoke(username, password, errorWrongValue)
 
             // Then
             Assert.assertEquals(expected, actual)
@@ -41,8 +42,8 @@ class AuthenticateUseCaseTest {
             val expected = UnsupportedOperationException(errorMessage)
 
             // When
-            whenever(authRepository.authenticate(username, password)).thenThrow(expected)
-            useCase.invoke(username, password)
+            whenever(authRepository.authenticate(username, password, errorMessage)).thenThrow(expected)
+            useCase.invoke(username, password, errorMessage)
         }
 
     @Test(expected = UnsupportedOperationException::class)
@@ -55,7 +56,7 @@ class AuthenticateUseCaseTest {
             val expected = UnsupportedOperationException(errorMessage)
 
             // when
-            whenever(authRepository.authenticate(username, password)).thenThrow(expected)
-            useCase.invoke(username, password)
+            whenever(authRepository.authenticate(username, password, errorMessage)).thenThrow(expected)
+            useCase.invoke(username, password, errorMessage)
         }
 }

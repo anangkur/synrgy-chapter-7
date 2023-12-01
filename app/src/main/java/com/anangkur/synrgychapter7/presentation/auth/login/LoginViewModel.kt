@@ -7,6 +7,7 @@ import androidx.lifecycle.viewModelScope
 import com.anangkur.domain.usecase.AuthenticateUseCase
 import com.anangkur.presentation.auth.login.CheckLoginUseCase
 import com.anangkur.presentation.auth.login.SaveTokenUseCase
+import com.anangkur.synrgychapter7.R
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -31,15 +32,20 @@ class LoginViewModel
         private val _error = MutableLiveData<String?>()
         val error: LiveData<String?> = _error
 
+        private val _int = MutableLiveData<Int>()
+        val int: LiveData<Int> = _int
+
         fun authenticate(
             username: String,
             password: String,
+            errorWrongValue: String,
         ) {
             _loading.value = true
             viewModelScope.launch(dispatcher) {
                 try {
                     withContext(Dispatchers.Main) {
-                        _authentication.value = authenticateUseCase.invoke(username, password)
+                        _authentication.value = authenticateUseCase.invoke(username, password, errorWrongValue)
+                        _int.value = R.string.app_name
                     }
                 } catch (throwable: Throwable) {
                     withContext(Dispatchers.Main) {

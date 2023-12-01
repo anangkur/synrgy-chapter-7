@@ -8,6 +8,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.doAfterTextChanged
 import com.anangkur.synrgychapter7.Application
+import com.anangkur.synrgychapter7.R
 import com.anangkur.synrgychapter7.databinding.ActivityLoginBinding
 import com.anangkur.synrgychapter7.helper.applyLanguage
 import com.anangkur.synrgychapter7.presentation.auth.register.RegisterActivity
@@ -46,6 +47,7 @@ class LoginActivity : AppCompatActivity() {
             viewModel.authenticate(
                 username = binding?.etUsername?.text?.toString().orEmpty(),
                 password = binding?.etPassword?.text?.toString().orEmpty(),
+                errorWrongValue = getString(R.string.app_name),
             )
         }
 

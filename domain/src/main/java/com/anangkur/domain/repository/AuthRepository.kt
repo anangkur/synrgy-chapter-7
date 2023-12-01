@@ -11,6 +11,7 @@ interface AuthRepository {
     suspend fun authenticate(
         username: String,
         password: String,
+        errorWrongValue: String,
     ): String
 
     suspend fun saveToken(token: String)

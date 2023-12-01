@@ -35,9 +35,13 @@ class LoginViewModelTest {
     private val dispatcher = Dispatchers.Main
 
     private val stringObserver = mock<Observer<String?>>()
+    private val intObserver = mock<Observer<Int>>()
 
     @Captor
     lateinit var stringCaptor: ArgumentCaptor<String>
+
+    @Captor
+    lateinit var intCaptor: ArgumentCaptor<Int>
 
     @Before
     fun setup() {
@@ -59,12 +63,13 @@ class LoginViewModelTest {
             // Given
             val username = "username"
             val password = "password"
+            val errorWrongValue = "errorWrongValue"
 
             // When
-            viewModel.authenticate(username, password)
+            viewModel.authenticate(username, password, errorWrongValue)
 
             // Then
-            verify(authenticateUseCase).invoke(username, password)
+            verify(authenticateUseCase).invoke(username, password, errorWrongValue)
         }
 
     @Test
@@ -73,17 +78,24 @@ class LoginViewModelTest {
             // Given
             val username = "anangkur"
             val password = "123456"
+            val errorWrongValue = "errorWrongValue"
             val expected = "token"
+            val expectedInt = 2131820572
             val liveData = viewModel.authentication
+            val liveDataInt = viewModel.int
             liveData.observeForever(stringObserver)
+            liveDataInt.observeForever(intObserver)
 
             // When
-            viewModel.authenticate(username, password)
+            viewModel.authenticate(username, password, errorWrongValue)
             verify(stringObserver).onChanged(capture(stringCaptor))
+            verify(intObserver).onChanged(capture(intCaptor))
 
             // Then
             val actual = stringCaptor.value
+            val actualInt = intCaptor.value
             Assert.assertEquals(expected, actual)
+            Assert.assertEquals(expectedInt, actualInt)
         }
 
     @Test
@@ -97,7 +109,7 @@ class LoginViewModelTest {
             liveData.observeForever(stringObserver)
 
             // When
-            viewModel.authenticate(username, password)
+            viewModel.authenticate(username, password, expected)
             verify(stringObserver).onChanged(capture(stringCaptor))
 
             // Then
@@ -116,7 +128,7 @@ class LoginViewModelTest {
             liveData.observeForever(stringObserver)
 
             // When
-            viewModel.authenticate(username, password)
+            viewModel.authenticate(username, password, expected)
             verify(stringObserver).onChanged(capture(stringCaptor))
 
             // Then
@@ -135,7 +147,7 @@ class LoginViewModelTest {
             liveData.observeForever(stringObserver)
 
             // When
-            viewModel.authenticate(username, password)
+            viewModel.authenticate(username, password, expected)
             verify(stringObserver).onChanged(capture(stringCaptor))
 
             // Then
