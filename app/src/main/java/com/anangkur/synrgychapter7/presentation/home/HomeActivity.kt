@@ -7,7 +7,6 @@ import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.anangkur.domain.Movie
 import com.anangkur.synrgychapter7.Application
 import com.anangkur.synrgychapter7.databinding.ActivityHomeBinding
 import com.anangkur.synrgychapter7.presentation.adapter.MovieAdapter
@@ -66,7 +65,7 @@ class HomeActivity : AppCompatActivity() {
         Toast.makeText(this, error, Toast.LENGTH_SHORT).show()
     }
 
-    private fun handleMovies(movies: List<Movie>) {
+    private fun handleMovies(movies: List<MovieUiData>) {
         movieAdapter?.submitList(movies)
     }
 }

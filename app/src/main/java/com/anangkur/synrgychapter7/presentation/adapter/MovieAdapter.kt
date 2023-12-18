@@ -3,10 +3,10 @@ package com.anangkur.synrgychapter7.presentation.adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
-import com.anangkur.domain.Movie
 import com.anangkur.synrgychapter7.databinding.ItemMovieBinding
+import com.anangkur.synrgychapter7.presentation.home.MovieUiData
 
-class MovieAdapter : ListAdapter<Movie, MovieViewHolder>(MovieDiffUtilCallback()) {
+class MovieAdapter : ListAdapter<MovieUiData, MovieViewHolder>(MovieDiffUtilCallback()) {
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int,

@@ -4,7 +4,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.anangkur.domain.Movie
 import com.anangkur.domain.repository.MovieRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -22,8 +21,8 @@ class HomeViewModel
         private val _error = MutableLiveData<String?>()
         val error: LiveData<String?> = _error
 
-        private val _movies = MutableLiveData<List<Movie>>()
-        val movies: LiveData<List<Movie>> = _movies
+        private val _movies = MutableLiveData<List<MovieUiData>>()
+        val movies: LiveData<List<MovieUiData>> = _movies
 
         fun fetchMovies() {
             _loading.value = true
@@ -38,9 +37,13 @@ class HomeViewModel
                 }.onSuccess { movies ->
                     withContext(Dispatchers.Main) {
                         _loading.value = false
-                        _movies.value = movies
+                        _movies.value = movies.map { movie -> movie.toMovieUiData() }
                     }
                 }
             }
+        }
+
+        private fun provideData(): List<MovieUiData> {
+            return listOf(MovieUiData("", "", ""))
         }
     }

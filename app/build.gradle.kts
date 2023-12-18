@@ -3,6 +3,10 @@ plugins {
     id("org.jetbrains.kotlin.android")
     id("kotlin-kapt")
     id("shot")
+    id("com.google.gms.google-services")
+    id("com.google.firebase.crashlytics")
+    id("com.google.firebase.firebase-perf")
+    id("io.sentry.android.gradle") version "4.0.0"
 }
 
 android {
@@ -21,11 +25,18 @@ android {
 
     buildTypes {
         release {
-            isMinifyEnabled = false
+            isMinifyEnabled = true
+            isShrinkResources = true
+            isDebuggable = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro",
             )
+        }
+        debug {
+            isDebuggable = true
+            applicationIdSuffix = ".debug"
+            versionNameSuffix = "-debug"
         }
     }
     compileOptions {
@@ -56,6 +67,31 @@ android {
 
         baseline = file("lint-baseline.xml")
     }
+
+    flavorDimensionList += listOf("version")
+
+    productFlavors {
+        register("demo") {
+            dimension = "version"
+            applicationIdSuffix = ".demo"
+            versionNameSuffix = "-demo"
+            resValue("string", "app_name", "Synrgy Chapter 7 - Demo")
+            buildConfigField("String", "BASE_URL", "\"https://api.themoviedb.org/2/\"")
+        }
+        register("full") {
+            dimension = "version"
+            applicationIdSuffix = ".full"
+            versionNameSuffix = "-full"
+            resValue("string", "app_name", "Synrgy Chapter 7")
+        }
+    }
+    buildFeatures {
+        buildConfig = true
+    }
+}
+
+sentry {
+    org.set("synrgy")
 }
 
 dependencies {
@@ -86,4 +122,10 @@ dependencies {
 
     // annotation processor
     kapt("com.google.dagger:dagger-compiler:2.48.1")
+
+    // firebase
+    implementation(platform("com.google.firebase:firebase-bom:32.7.0"))
+    implementation("com.google.firebase:firebase-analytics")
+    implementation("com.google.firebase:firebase-crashlytics")
+    implementation("com.google.firebase:firebase-perf")
 }

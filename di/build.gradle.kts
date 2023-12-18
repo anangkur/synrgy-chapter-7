@@ -31,6 +31,20 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
     }
+    flavorDimensionList += listOf("version")
+    productFlavors {
+        register("demo") {
+            dimension = "version"
+            buildConfigField("String", "BASE_URL", "\"https://api.themoviedb.org/2/\"")
+        }
+        register("full") {
+            dimension = "version"
+            buildConfigField("String", "BASE_URL", "\"https://api.themoviedb.org/3/\"")
+        }
+    }
+    buildFeatures {
+        buildConfig = true
+    }
 }
 
 dependencies {

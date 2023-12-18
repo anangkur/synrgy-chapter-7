@@ -1,0 +1,86 @@
+{
+  "project_info": {
+    "project_number": "418340768262",
+    "project_id": "synrgy-chapter-7",
+    "storage_bucket": "synrgy-chapter-7.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:418340768262:android:b96ca26eae2c820642d187",
+        "android_client_info": {
+          "package_name": "com.anangkur.synrgychapter7.demo"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDG5L9pxbRMSI1zeJMPvRU7Yu8A4LPaWGQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:418340768262:android:01815f1b5b01c65942d187",
+        "android_client_info": {
+          "package_name": "com.anangkur.synrgychapter7.demo.debug"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDG5L9pxbRMSI1zeJMPvRU7Yu8A4LPaWGQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:418340768262:android:24514631953272e342d187",
+        "android_client_info": {
+          "package_name": "com.anangkur.synrgychapter7.full"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDG5L9pxbRMSI1zeJMPvRU7Yu8A4LPaWGQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:418340768262:android:c75665aba74c503042d187",
+        "android_client_info": {
+          "package_name": "com.anangkur.synrgychapter7.full.debug"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDG5L9pxbRMSI1zeJMPvRU7Yu8A4LPaWGQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

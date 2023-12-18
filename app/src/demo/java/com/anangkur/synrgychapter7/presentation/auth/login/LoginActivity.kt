@@ -8,6 +8,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.doAfterTextChanged
 import com.anangkur.synrgychapter7.Application
+import com.anangkur.synrgychapter7.BuildConfig
 import com.anangkur.synrgychapter7.R
 import com.anangkur.synrgychapter7.databinding.ActivityLoginBinding
 import com.anangkur.synrgychapter7.helper.applyLanguage
@@ -55,6 +56,8 @@ class LoginActivity : AppCompatActivity() {
             applyLanguage("en", provideIntent(this))
         }
 
+        binding?.buttonChangeLanguage?.visibility = View.GONE
+
         binding?.buttonRegister?.setOnClickListener {
             register()
         }
@@ -65,6 +68,9 @@ class LoginActivity : AppCompatActivity() {
 
         binding?.etPassword?.doAfterTextChanged { value ->
             handleEnableButtonLogin(password = value?.toString().orEmpty())
+        }
+
+        if (BuildConfig.FLAVOR == "demo") {
         }
     }
 

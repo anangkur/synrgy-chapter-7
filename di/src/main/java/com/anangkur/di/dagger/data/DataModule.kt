@@ -5,7 +5,9 @@ import androidx.work.WorkManager
 import com.anangkur.data.local.LocalRepository
 import com.anangkur.data.local.datastore.DataStoreManager
 import com.anangkur.data.remote.RemoteRepository
+import com.anangkur.data.remote.service.ItineraryService
 import com.anangkur.data.remote.service.TMDBService
+import com.anangkur.di.BuildConfig
 import com.chuckerteam.chucker.api.ChuckerInterceptor
 import dagger.Module
 import dagger.Provides
@@ -27,8 +29,11 @@ class DataModule {
     }
 
     @Provides
-    fun provideRemoteRepository(tmdbService: TMDBService): RemoteRepository {
-        return RemoteRepository(tmdbService)
+    fun provideRemoteRepository(
+        itineraryService: ItineraryService,
+        tmdbService: TMDBService,
+    ): RemoteRepository {
+        return RemoteRepository(tmdbService, itineraryService)
     }
 
     @Provides
@@ -39,6 +44,11 @@ class DataModule {
     @Provides
     fun provideTMDBService(retrofit: Retrofit): TMDBService {
         return retrofit.create(TMDBService::class.java)
+    }
+
+    @Provides
+    fun provideItineraryService(retrofit: Retrofit): ItineraryService {
+        return retrofit.create(ItineraryService::class.java)
     }
 
     @Provides
@@ -67,7 +77,7 @@ class DataModule {
 
     @Provides
     fun provideBaseUrl(): String {
-        return "https://api.themoviedb.org/3/"
+        return BuildConfig.BASE_URL
     }
 
     @Provides
